@@ -1,0 +1,260 @@
+{
+  "info": {
+    "name": "Rawan El Anouti - Services 3, 8, 9",
+    "description": "Incident Management, Notifications, and Security Playbooks. Login through Service 1 first, then paste the access_token into collection variable token.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    { "key": "users_url", "value": "http://127.0.0.1:5000" },
+    { "key": "incidents_url", "value": "http://127.0.0.1:5003" },
+    { "key": "notifications_url", "value": "http://127.0.0.1:5008" },
+    { "key": "playbooks_url", "value": "http://127.0.0.1:5009" },
+    { "key": "token", "value": "" },
+    { "key": "hanaa_prefix", "value": "/Hanaa-Ballout" },
+    { "key": "rawan_prefix", "value": "/Rawan-El-Anouti" }
+  ],
+  "item": [
+    {
+      "name": "Service 1 Login (needed for JWT)",
+      "item": [
+        {
+          "name": "Login",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"username\": \"admin\",\n  \"password\": \"your-password\"\n}"
+            },
+            "url": "{{users_url}}{{hanaa_prefix}}/users/login"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Service 3 Incident Management - Rawan El Anouti",
+      "item": [
+        {
+          "name": "Create Incident",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{token}}" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title\": \"Phishing email reported\",\n  \"description\": \"Employee received a suspicious login email\",\n  \"category\": \"Phishing attack\",\n  \"severity\": \"Medium\",\n  \"affected_asset\": 1\n}"
+            },
+            "url": "{{incidents_url}}{{rawan_prefix}}/incidents"
+          }
+        },
+        {
+          "name": "Retrieve All Incidents",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+            "url": "{{incidents_url}}{{rawan_prefix}}/incidents"
+          }
+        },
+        {
+          "name": "Retrieve Specific Incident",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+            "url": "{{incidents_url}}{{rawan_prefix}}/incidents/1"
+          }
+        },
+        {
+          "name": "Assign Incident to Analyst",
+          "request": {
+            "method": "PUT",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{token}}" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"analyst_id\": 2\n}"
+            },
+            "url": "{{incidents_url}}{{rawan_prefix}}/incidents/1/assign"
+          }
+        },
+        {
+          "name": "Update Incident Status",
+          "request": {
+            "method": "PUT",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{token}}" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"status\": \"Under Investigation\"\n}"
+            },
+            "url": "{{incidents_url}}{{rawan_prefix}}/incidents/1/status"
+          }
+        },
+        {
+          "name": "Add Investigation Notes",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{token}}" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"note_content\": \"Email headers collected. Sender domain looks spoofed.\"\n}"
+            },
+            "url": "{{incidents_url}}{{rawan_prefix}}/incidents/1/notes"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Service 8 Notifications - Rawan El Anouti",
+      "item": [
+        {
+          "name": "Create Notification",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{token}}" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"user_id\": 2,\n  \"title\": \"Critical alert\",\n  \"message\": \"A high severity incident was assigned to you\",\n  \"notification_type\": \"Security Alert\",\n  \"severity\": \"High\"\n}"
+            },
+            "url": "{{notifications_url}}{{rawan_prefix}}/notifications"
+          }
+        },
+        {
+          "name": "Retrieve User Notifications",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+            "url": "{{notifications_url}}{{rawan_prefix}}/notifications/user/2"
+          }
+        },
+        {
+          "name": "Retrieve Specific Notification",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+            "url": "{{notifications_url}}{{rawan_prefix}}/notifications/1"
+          }
+        },
+        {
+          "name": "Mark Notification as Read",
+          "request": {
+            "method": "PUT",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+            "url": "{{notifications_url}}{{rawan_prefix}}/notifications/1/read"
+          }
+        },
+        {
+          "name": "Search Notifications",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+            "url": {
+              "raw": "{{notifications_url}}{{rawan_prefix}}/notifications/search?user=2&notification_type=Security Alert&severity=High&status=Unread",
+              "host": ["{{notifications_url}}{{rawan_prefix}}"],
+              "path": ["notifications", "search"],
+              "query": [
+                { "key": "user", "value": "2" },
+                { "key": "notification_type", "value": "Security Alert" },
+                { "key": "severity", "value": "High" },
+                { "key": "status", "value": "Unread" }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Delete Notification",
+          "request": {
+            "method": "DELETE",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+            "url": "{{notifications_url}}{{rawan_prefix}}/notifications/1"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Service 9 Playbooks - Rawan El Anouti",
+      "item": [
+        {
+          "name": "Create Response Playbook",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{token}}" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"playbook_name\": \"Phishing Response\",\n  \"description\": \"Standard response workflow for phishing incidents\",\n  \"incident_category\": \"Phishing attack\",\n  \"severity\": \"High\"\n}"
+            },
+            "url": "{{playbooks_url}}{{rawan_prefix}}/playbooks"
+          }
+        },
+        {
+          "name": "Retrieve All Playbooks",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+            "url": "{{playbooks_url}}{{rawan_prefix}}/playbooks"
+          }
+        },
+        {
+          "name": "Retrieve Specific Playbook",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+            "url": "{{playbooks_url}}{{rawan_prefix}}/playbooks/1"
+          }
+        },
+        {
+          "name": "Add Response Action",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{token}}" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"action_description\": \"Isolate the affected mailbox\",\n  \"step_number\": 1,\n  \"assigned_user_id\": 2\n}"
+            },
+            "url": "{{playbooks_url}}{{rawan_prefix}}/playbooks/1/actions"
+          }
+        },
+        {
+          "name": "Update Response Action Status",
+          "request": {
+            "method": "PUT",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{token}}" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"status\": \"In Progress\",\n  \"assigned_user_id\": 2\n}"
+            },
+            "url": "{{playbooks_url}}{{rawan_prefix}}/actions/1/status"
+          }
+        },
+        {
+          "name": "Delete Playbook",
+          "request": {
+            "method": "DELETE",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+            "url": "{{playbooks_url}}{{rawan_prefix}}/playbooks/1"
+          }
+        }
+      ]
+    }
+  ]
+}
