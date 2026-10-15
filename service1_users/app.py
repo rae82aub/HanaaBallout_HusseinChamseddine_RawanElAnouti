@@ -11,8 +11,12 @@ from database import create_tables, get_connection
 import re
 import sqlite3
 import os
+from dotenv import load_dotenv
+from pathlib import Path
 
 app = Flask(__name__)
+
+load_dotenv(Path(__file__).resolve().parent.parent / ".env")
 
 app.config["JWT_SECRET_KEY"] = os.environ.get("JWT_SECRET_KEY")
 jwt = JWTManager(app)
