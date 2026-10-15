@@ -1,0 +1,520 @@
+{
+  "info": {
+    "_postman_id": "99215f92-d6d3-4202-8150-8b57a5e8c05b",
+    "name": "service 9",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "58786322",
+    "_collection_link": "https://go.postman.co/collection/58786322-99215f92-d6d3-4202-8150-8b57a5e8c05b?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "post playbook normal user (invalid)",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{json_web_token_0sfc}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "POST",
+        "header": [],
+        "url": {
+          "raw": "http://127.0.0.1:5009/Rawan-El-Anouti/playbooks",
+          "protocol": "http",
+          "host": [
+            "127",
+            "0",
+            "0",
+            "1"
+          ],
+          "port": "5009",
+          "path": [
+            "Rawan-El-Anouti",
+            "playbooks"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "get the playbooks normal user (invalid)",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{json_web_token_1ead}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://127.0.0.1:5009/Rawan-El-Anouti/playbooks",
+          "protocol": "http",
+          "host": [
+            "127",
+            "0",
+            "0",
+            "1"
+          ],
+          "port": "5009",
+          "path": [
+            "Rawan-El-Anouti",
+            "playbooks"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "get specific playbook normal user (invalid)",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{json_web_token_1ead}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://127.0.0.1:5009/Rawan-El-Anouti/playbooks/1",
+          "protocol": "http",
+          "host": [
+            "127",
+            "0",
+            "0",
+            "1"
+          ],
+          "port": "5009",
+          "path": [
+            "Rawan-El-Anouti",
+            "playbooks",
+            "1"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "post a speicifc playbook normal user (invalid)",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{json_web_token_1ead}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"action_description\": \"Investigate the phishing email and identify affected accounts.\",\n  \"step_number\": 1\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://127.0.0.1:5009/Rawan-El-Anouti/playbooks/1/actions",
+          "protocol": "http",
+          "host": [
+            "127",
+            "0",
+            "0",
+            "1"
+          ],
+          "port": "5009",
+          "path": [
+            "Rawan-El-Anouti",
+            "playbooks",
+            "1",
+            "actions"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "update status normal user (invalid)",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{json_web_token_1ead}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "PUT",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"status\": \"In Progress\",\n  \"assigned_user\": 5\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://127.0.0.1:5009/Rawan-El-Anouti/actions/1/status",
+          "protocol": "http",
+          "host": [
+            "127",
+            "0",
+            "0",
+            "1"
+          ],
+          "port": "5009",
+          "path": [
+            "Rawan-El-Anouti",
+            "actions",
+            "1",
+            "status"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "delete playbook normal user (invalid)",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{json_web_token_1ead}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "DELETE",
+        "header": [],
+        "url": {
+          "raw": "http://127.0.0.1:5009/Rawan-El-Anouti/playbooks/1",
+          "protocol": "http",
+          "host": [
+            "127",
+            "0",
+            "0",
+            "1"
+          ],
+          "port": "5009",
+          "path": [
+            "Rawan-El-Anouti",
+            "playbooks",
+            "1"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "post playbook by admin",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{json_web_token_0k50}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"playbook_name\": \"Phishing Incident Response\",\n  \"description\": \"Standard response procedure for investigating and resolving phishing incidents.\",\n  \"incident_category\": \"Phishing attack\",\n  \"severity\": \"High\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://127.0.0.1:5009/Rawan-El-Anouti/playbooks",
+          "protocol": "http",
+          "host": [
+            "127",
+            "0",
+            "0",
+            "1"
+          ],
+          "port": "5009",
+          "path": [
+            "Rawan-El-Anouti",
+            "playbooks"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "retreive playbooks by admin",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{json_web_token_0htr}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://127.0.0.1:5009/Rawan-El-Anouti/playbooks",
+          "protocol": "http",
+          "host": [
+            "127",
+            "0",
+            "0",
+            "1"
+          ],
+          "port": "5009",
+          "path": [
+            "Rawan-El-Anouti",
+            "playbooks"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "retreive specific playbook by admin",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{json_web_token_084b}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://127.0.0.1:5009/Rawan-El-Anouti/playbooks/2",
+          "protocol": "http",
+          "host": [
+            "127",
+            "0",
+            "0",
+            "1"
+          ],
+          "port": "5009",
+          "path": [
+            "Rawan-El-Anouti",
+            "playbooks",
+            "2"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "add action to playbook",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{json_web_token_0k50}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"action_description\": \"Investigate the phishing email and identify affected accounts.\",\n  \"step_number\": 1\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://127.0.0.1:5009/Rawan-El-Anouti/playbooks/4/actions",
+          "protocol": "http",
+          "host": [
+            "127",
+            "0",
+            "0",
+            "1"
+          ],
+          "port": "5009",
+          "path": [
+            "Rawan-El-Anouti",
+            "playbooks",
+            "4",
+            "actions"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "change status of playbook",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{json_web_token_0k50}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "PUT",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"status\": \"Completed\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://127.0.0.1:5009/Rawan-El-Anouti/actions/4/status",
+          "protocol": "http",
+          "host": [
+            "127",
+            "0",
+            "0",
+            "1"
+          ],
+          "port": "5009",
+          "path": [
+            "Rawan-El-Anouti",
+            "actions",
+            "4",
+            "status"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "delete playbook",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{json_web_token_084b}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "DELETE",
+        "header": [],
+        "url": {
+          "raw": "http://127.0.0.1:5009/Rawan-El-Anouti/playbooks/2",
+          "protocol": "http",
+          "host": [
+            "127",
+            "0",
+            "0",
+            "1"
+          ],
+          "port": "5009",
+          "path": [
+            "Rawan-El-Anouti",
+            "playbooks",
+            "2"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "verify deletion",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{json_web_token_084b}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://127.0.0.1:5009/Rawan-El-Anouti/playbooks/2",
+          "protocol": "http",
+          "host": [
+            "127",
+            "0",
+            "0",
+            "1"
+          ],
+          "port": "5009",
+          "path": [
+            "Rawan-El-Anouti",
+            "playbooks",
+            "2"
+          ]
+        }
+      },
+      "response": []
+    }
+  ],
+  "variable": [
+    {
+      "key": "json_web_token_0sfc",
+      "secret": true
+    },
+    {
+      "key": "json_web_token_1ead",
+      "secret": true
+    },
+    {
+      "key": "json_web_token_0k50",
+      "secret": true
+    },
+    {
+      "key": "json_web_token_0htr",
+      "secret": true
+    },
+    {
+      "key": "json_web_token_084b",
+      "secret": true
+    }
+  ]
+}

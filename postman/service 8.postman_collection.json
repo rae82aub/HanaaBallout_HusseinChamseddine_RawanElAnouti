@@ -1,0 +1,390 @@
+{
+  "info": {
+    "_postman_id": "94d45750-c492-4ab8-8bd7-91c57b8eb65d",
+    "name": "service 8",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "58786322",
+    "_collection_link": "https://go.postman.co/collection/58786322-94d45750-c492-4ab8-8bd7-91c57b8eb65d?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "retrieve user notification",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{json_web_token_0sfc}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://127.0.0.1:5008/Rawan-El-Anouti/notifications/user/5",
+          "protocol": "http",
+          "host": [
+            "127",
+            "0",
+            "0",
+            "1"
+          ],
+          "port": "5008",
+          "path": [
+            "Rawan-El-Anouti",
+            "notifications",
+            "user",
+            "5"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "post notification with normal user (invalid)",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{json_web_token_0sfc}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"user_id\": 5,\n  \"title\": \"Security Alert\",\n  \"message\": \"A suspicious login attempt was detected.\",\n  \"notification_type\": \"Security Alert\",\n  \"severity\": \"High\"\n}\n",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://127.0.0.1:5008/Rawan-El-Anouti/notifications",
+          "protocol": "http",
+          "host": [
+            "127",
+            "0",
+            "0",
+            "1"
+          ],
+          "port": "5008",
+          "path": [
+            "Rawan-El-Anouti",
+            "notifications"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "retrieving invalid notification",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{json_web_token_0sfc}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://127.0.0.1:5008/Rawan-El-Anouti/notifications/99999",
+          "protocol": "http",
+          "host": [
+            "127",
+            "0",
+            "0",
+            "1"
+          ],
+          "port": "5008",
+          "path": [
+            "Rawan-El-Anouti",
+            "notifications",
+            "99999"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "post notification with admin access",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{json_web_token_13zv}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"user_id\": 5,\n  \"title\": \"Security Alert\",\n  \"message\": \"A suspicious login attempt was detected on your account.\",\n  \"notification_type\": \"Security Alert\",\n  \"severity\": \"High\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://127.0.0.1:5008/Rawan-El-Anouti/notifications",
+          "protocol": "http",
+          "host": [
+            "127",
+            "0",
+            "0",
+            "1"
+          ],
+          "port": "5008",
+          "path": [
+            "Rawan-El-Anouti",
+            "notifications"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "retreieve one user notification",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{json_web_token_13zv}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://127.0.0.1:5008/Rawan-El-Anouti/notifications/user/5",
+          "protocol": "http",
+          "host": [
+            "127",
+            "0",
+            "0",
+            "1"
+          ],
+          "port": "5008",
+          "path": [
+            "Rawan-El-Anouti",
+            "notifications",
+            "user",
+            "5"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "retrieve specific notification",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{json_web_token_1a1n}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://127.0.0.1:5008/Rawan-El-Anouti/notifications/3",
+          "protocol": "http",
+          "host": [
+            "127",
+            "0",
+            "0",
+            "1"
+          ],
+          "port": "5008",
+          "path": [
+            "Rawan-El-Anouti",
+            "notifications",
+            "3"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "mark notification as read",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{json_web_token_1a1n}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "PUT",
+        "header": [],
+        "url": {
+          "raw": "http://127.0.0.1:5008/Rawan-El-Anouti/notifications/3/read",
+          "protocol": "http",
+          "host": [
+            "127",
+            "0",
+            "0",
+            "1"
+          ],
+          "port": "5008",
+          "path": [
+            "Rawan-El-Anouti",
+            "notifications",
+            "3",
+            "read"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "search notifications by read status",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{json_web_token_1a1n}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://127.0.0.1:5008/Rawan-El-Anouti/notifications/search?status=Read",
+          "protocol": "http",
+          "host": [
+            "127",
+            "0",
+            "0",
+            "1"
+          ],
+          "port": "5008",
+          "path": [
+            "Rawan-El-Anouti",
+            "notifications",
+            "search"
+          ],
+          "query": [
+            {
+              "key": "status",
+              "value": "Read"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "delete a notification",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{json_web_token_1a1n}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "DELETE",
+        "header": [],
+        "url": {
+          "raw": "http://127.0.0.1:5008/Rawan-El-Anouti/notifications/3",
+          "protocol": "http",
+          "host": [
+            "127",
+            "0",
+            "0",
+            "1"
+          ],
+          "port": "5008",
+          "path": [
+            "Rawan-El-Anouti",
+            "notifications",
+            "3"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "get notification after deletion (error)",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{json_web_token_1a1n}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://127.0.0.1:5008/Rawan-El-Anouti/notifications/3",
+          "protocol": "http",
+          "host": [
+            "127",
+            "0",
+            "0",
+            "1"
+          ],
+          "port": "5008",
+          "path": [
+            "Rawan-El-Anouti",
+            "notifications",
+            "3"
+          ]
+        }
+      },
+      "response": []
+    }
+  ],
+  "variable": [
+    {
+      "key": "json_web_token_0sfc",
+      "secret": true
+    },
+    {
+      "key": "json_web_token_13zv",
+      "secret": true
+    },
+    {
+      "key": "json_web_token_1a1n",
+      "secret": true
+    }
+  ]
+}

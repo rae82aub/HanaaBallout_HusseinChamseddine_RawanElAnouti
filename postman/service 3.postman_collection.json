@@ -1,0 +1,586 @@
+{
+  "info": {
+    "_postman_id": "cc1738b7-3f8c-4920-8aaa-c2cb6bb8c65f",
+    "name": "service 3",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "58786322",
+    "_collection_link": "https://go.postman.co/collection/58786322-cc1738b7-3f8c-4920-8aaa-c2cb6bb8c65f?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "register",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"full_name\": \"Rawan El Anouti\",\n  \"username\": \"rawan_test\",\n  \"email\": \"rawan.test@example.com\",\n  \"password\": \"TestPassword123!\",\n  \"department\": \"IT\",\n  \"role\": \"Regular Employee\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://127.0.0.1:5000/Hanaa-Ballout/users/register",
+          "protocol": "http",
+          "host": [
+            "127",
+            "0",
+            "0",
+            "1"
+          ],
+          "port": "5000",
+          "path": [
+            "Hanaa-Ballout",
+            "users",
+            "register"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "login",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"username\": \"admin\",\n  \"password\": \"Password1\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://127.0.0.1:5000/Hanaa-Ballout/users/login",
+          "protocol": "http",
+          "host": [
+            "127",
+            "0",
+            "0",
+            "1"
+          ],
+          "port": "5000",
+          "path": [
+            "Hanaa-Ballout",
+            "users",
+            "login"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "create incident",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{json_web_token_10vd}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"title\": \"Phishing Email Detected\",\n  \"description\": \"An employee received a suspicious email requesting login credentials.\",\n  \"category\": \"Phishing attack\",\n  \"severity\": \"Medium\",\n  \"affected_asset\": 1\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://127.0.0.1:5003/Rawan-El-Anouti/incidents",
+          "protocol": "http",
+          "host": [
+            "127",
+            "0",
+            "0",
+            "1"
+          ],
+          "port": "5003",
+          "path": [
+            "Rawan-El-Anouti",
+            "incidents"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "check invalid incident",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{json_web_token_10vd}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://127.0.0.1:5003/Rawan-El-Anouti/incidents/99999",
+          "protocol": "http",
+          "host": [
+            "127",
+            "0",
+            "0",
+            "1"
+          ],
+          "port": "5003",
+          "path": [
+            "Rawan-El-Anouti",
+            "incidents",
+            "99999"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "retrieve incidents with normal user access (invalid)",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{json_web_token_10vd}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://127.0.0.1:5003/Rawan-El-Anouti/incidents",
+          "protocol": "http",
+          "host": [
+            "127",
+            "0",
+            "0",
+            "1"
+          ],
+          "port": "5003",
+          "path": [
+            "Rawan-El-Anouti",
+            "incidents"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "assign incident with normal user access (invalid)",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{json_web_token_10vd}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "PUT",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"analyst_id\": 2\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://127.0.0.1:5003/Rawan-El-Anouti/incidents/5/assign",
+          "protocol": "http",
+          "host": [
+            "127",
+            "0",
+            "0",
+            "1"
+          ],
+          "port": "5003",
+          "path": [
+            "Rawan-El-Anouti",
+            "incidents",
+            "5",
+            "assign"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "add notes with normal user access (invalid)",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{json_web_token_07a5}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"note_content\": \"The suspicious phishing email was analyzed. The sender's address and embedded links were reviewed. The incident requires further investigation.\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://127.0.0.1:5003/Rawan-El-Anouti/incidents/5/notes",
+          "protocol": "http",
+          "host": [
+            "127",
+            "0",
+            "0",
+            "1"
+          ],
+          "port": "5003",
+          "path": [
+            "Rawan-El-Anouti",
+            "incidents",
+            "5",
+            "notes"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "assign incident with admin account",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{json_web_token_0bl2}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "PUT",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"analyst_id\": 2\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://127.0.0.1:5003/Rawan-El-Anouti/incidents/5/assign",
+          "protocol": "http",
+          "host": [
+            "127",
+            "0",
+            "0",
+            "1"
+          ],
+          "port": "5003",
+          "path": [
+            "Rawan-El-Anouti",
+            "incidents",
+            "5",
+            "assign"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "update incident status",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{json_web_token_0bl2}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "PUT",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"status\": \"Under Investigation\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://127.0.0.1:5003/Rawan-El-Anouti/incidents/5/status",
+          "protocol": "http",
+          "host": [
+            "127",
+            "0",
+            "0",
+            "1"
+          ],
+          "port": "5003",
+          "path": [
+            "Rawan-El-Anouti",
+            "incidents",
+            "5",
+            "status"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "update status of the incident",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{json_web_token_0bl2}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "PUT",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"status\": \"Mitigated\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://127.0.0.1:5003/Rawan-El-Anouti/incidents/5/status",
+          "protocol": "http",
+          "host": [
+            "127",
+            "0",
+            "0",
+            "1"
+          ],
+          "port": "5003",
+          "path": [
+            "Rawan-El-Anouti",
+            "incidents",
+            "5",
+            "status"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "add notes with admin access",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{json_web_token_0bl2}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"note_content\": \"The phishing email wa investigated. The suspicious sender and embedded links were analyzed, and the incident was resolved.\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://127.0.0.1:5003/Rawan-El-Anouti/incidents/5/notes",
+          "protocol": "http",
+          "host": [
+            "127",
+            "0",
+            "0",
+            "1"
+          ],
+          "port": "5003",
+          "path": [
+            "Rawan-El-Anouti",
+            "incidents",
+            "5",
+            "notes"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "retreive one incident",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{json_web_token_0bl2}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "\"investigation_notes\": [\n  {\n    \"note_id\": 2,\n    \"incident_id\": 5,\n    \"analyst_id\": 1,\n    \"note_content\": \"The phishing email was investigated...\"\n  }\n]",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://127.0.0.1:5003/Rawan-El-Anouti/incidents/5",
+          "protocol": "http",
+          "host": [
+            "127",
+            "0",
+            "0",
+            "1"
+          ],
+          "port": "5003",
+          "path": [
+            "Rawan-El-Anouti",
+            "incidents",
+            "5"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "retreive incidents with admin access",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{json_web_token_13zv}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://127.0.0.1:5003/Rawan-El-Anouti/incidents",
+          "protocol": "http",
+          "host": [
+            "127",
+            "0",
+            "0",
+            "1"
+          ],
+          "port": "5003",
+          "path": [
+            "Rawan-El-Anouti",
+            "incidents"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "create incident with invalid severity",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{json_web_token_13zv}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"title\": \"Suspicious Login Attempt\",\n  \"description\": \"Multiple unsuccessful login attempts were detected.\",\n  \"category\": \"Unauthorized access\",\n  \"severity\": \"Extreme\",\n  \"affected_asset\": 1\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://127.0.0.1:5003/Rawan-El-Anouti/incidents",
+          "protocol": "http",
+          "host": [
+            "127",
+            "0",
+            "0",
+            "1"
+          ],
+          "port": "5003",
+          "path": [
+            "Rawan-El-Anouti",
+            "incidents"
+          ]
+        }
+      },
+      "response": []
+    }
+  ],
+  "variable": [
+    {
+      "key": "json_web_token_10vd",
+      "secret": true
+    },
+    {
+      "key": "json_web_token_07a5",
+      "secret": true
+    },
+    {
+      "key": "json_web_token_0bl2",
+      "secret": true
+    },
+    {
+      "key": "json_web_token_13zv",
+      "secret": true
+    }
+  ]
+}
