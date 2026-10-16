@@ -8,229 +8,7 @@
   },
   "item": [
     {
-      "name": "post playbook normal user (invalid)",
-      "request": {
-        "auth": {
-          "type": "bearer",
-          "bearer": [
-            {
-              "key": "token",
-              "value": "{{json_web_token_0sfc}}",
-              "type": "string"
-            }
-          ]
-        },
-        "method": "POST",
-        "header": [],
-        "url": {
-          "raw": "http://127.0.0.1:5009/Rawan-El-Anouti/playbooks",
-          "protocol": "http",
-          "host": [
-            "127",
-            "0",
-            "0",
-            "1"
-          ],
-          "port": "5009",
-          "path": [
-            "Rawan-El-Anouti",
-            "playbooks"
-          ]
-        }
-      },
-      "response": []
-    },
-    {
-      "name": "get the playbooks normal user (invalid)",
-      "request": {
-        "auth": {
-          "type": "bearer",
-          "bearer": [
-            {
-              "key": "token",
-              "value": "{{json_web_token_1ead}}",
-              "type": "string"
-            }
-          ]
-        },
-        "method": "GET",
-        "header": [],
-        "url": {
-          "raw": "http://127.0.0.1:5009/Rawan-El-Anouti/playbooks",
-          "protocol": "http",
-          "host": [
-            "127",
-            "0",
-            "0",
-            "1"
-          ],
-          "port": "5009",
-          "path": [
-            "Rawan-El-Anouti",
-            "playbooks"
-          ]
-        }
-      },
-      "response": []
-    },
-    {
-      "name": "get specific playbook normal user (invalid)",
-      "request": {
-        "auth": {
-          "type": "bearer",
-          "bearer": [
-            {
-              "key": "token",
-              "value": "{{json_web_token_1ead}}",
-              "type": "string"
-            }
-          ]
-        },
-        "method": "GET",
-        "header": [],
-        "url": {
-          "raw": "http://127.0.0.1:5009/Rawan-El-Anouti/playbooks/1",
-          "protocol": "http",
-          "host": [
-            "127",
-            "0",
-            "0",
-            "1"
-          ],
-          "port": "5009",
-          "path": [
-            "Rawan-El-Anouti",
-            "playbooks",
-            "1"
-          ]
-        }
-      },
-      "response": []
-    },
-    {
-      "name": "post a speicifc playbook normal user (invalid)",
-      "request": {
-        "auth": {
-          "type": "bearer",
-          "bearer": [
-            {
-              "key": "token",
-              "value": "{{json_web_token_1ead}}",
-              "type": "string"
-            }
-          ]
-        },
-        "method": "POST",
-        "header": [],
-        "body": {
-          "mode": "raw",
-          "raw": "{\n  \"action_description\": \"Investigate the phishing email and identify affected accounts.\",\n  \"step_number\": 1\n}",
-          "options": {
-            "raw": {
-              "language": "json"
-            }
-          }
-        },
-        "url": {
-          "raw": "http://127.0.0.1:5009/Rawan-El-Anouti/playbooks/1/actions",
-          "protocol": "http",
-          "host": [
-            "127",
-            "0",
-            "0",
-            "1"
-          ],
-          "port": "5009",
-          "path": [
-            "Rawan-El-Anouti",
-            "playbooks",
-            "1",
-            "actions"
-          ]
-        }
-      },
-      "response": []
-    },
-    {
-      "name": "update status normal user (invalid)",
-      "request": {
-        "auth": {
-          "type": "bearer",
-          "bearer": [
-            {
-              "key": "token",
-              "value": "{{json_web_token_1ead}}",
-              "type": "string"
-            }
-          ]
-        },
-        "method": "PUT",
-        "header": [],
-        "body": {
-          "mode": "raw",
-          "raw": "{\n  \"status\": \"In Progress\",\n  \"assigned_user\": 5\n}",
-          "options": {
-            "raw": {
-              "language": "json"
-            }
-          }
-        },
-        "url": {
-          "raw": "http://127.0.0.1:5009/Rawan-El-Anouti/actions/1/status",
-          "protocol": "http",
-          "host": [
-            "127",
-            "0",
-            "0",
-            "1"
-          ],
-          "port": "5009",
-          "path": [
-            "Rawan-El-Anouti",
-            "actions",
-            "1",
-            "status"
-          ]
-        }
-      },
-      "response": []
-    },
-    {
-      "name": "delete playbook normal user (invalid)",
-      "request": {
-        "auth": {
-          "type": "bearer",
-          "bearer": [
-            {
-              "key": "token",
-              "value": "{{json_web_token_1ead}}",
-              "type": "string"
-            }
-          ]
-        },
-        "method": "DELETE",
-        "header": [],
-        "url": {
-          "raw": "http://127.0.0.1:5009/Rawan-El-Anouti/playbooks/1",
-          "protocol": "http",
-          "host": [
-            "127",
-            "0",
-            "0",
-            "1"
-          ],
-          "port": "5009",
-          "path": [
-            "Rawan-El-Anouti",
-            "playbooks",
-            "1"
-          ]
-        }
-      },
-      "response": []
-    },
-    {
-      "name": "post playbook by admin",
+      "name": "post playbook",
       "request": {
         "auth": {
           "type": "bearer",
@@ -267,12 +45,13 @@
             "Rawan-El-Anouti",
             "playbooks"
           ]
-        }
+        },
+        "description": "**Method:** POST  \n**Endpoint:** `/Rawan-El-Anouti/playbooks`\n\n**Purpose:** Allows a Security Administrator to create a security response playbook.\n\n**Required Parameters:** `playbook_name`, `description`, `incident_category`, `severity`.\n\n**Request Example:**\n\n``` json\n{\n  \"playbook_name\": \"Phishing Incident Response\",\n  \"description\": \"Standard procedure for handling phishing incidents.\",\n  \"incident_category\": \"Phishing attack\",\n  \"severity\": \"High\"\n}\n\n ```\n\n**Successful Response:** 201 Created; Returns the newly created playbook and its ID.\n\n**Authentication:** JWT Bearer Token (Security Administrator).\n\n**Possible Errors:** 400 (Invalid data), 401 (Unauthenticated), 403 (Forbidden)."
       },
       "response": []
     },
     {
-      "name": "retreive playbooks by admin",
+      "name": "retreive playbooks",
       "request": {
         "auth": {
           "type": "bearer",
@@ -300,12 +79,13 @@
             "Rawan-El-Anouti",
             "playbooks"
           ]
-        }
+        },
+        "description": "**Method:** GET  \n**Endpoint:** `/Rawan-El-Anouti/playbooks`\n\n**Purpose:** Retrieves all available security playbooks from the database.\n\n**Required Parameters:** None.\n\n**Request Body:** None.\n\n**Successful Response:** 200 OK; Returns a list of playbooks and their details.\n\n**Authentication:** JWT Bearer Token (Security Administrator, Security Analyst, or Auditor).\n\n**Possible Errors:** 401 (Unauthenticated), 403 (Forbidden)."
       },
       "response": []
     },
     {
-      "name": "retreive specific playbook by admin",
+      "name": "retreive specific playbook",
       "request": {
         "auth": {
           "type": "bearer",
@@ -334,7 +114,8 @@
             "playbooks",
             "2"
           ]
-        }
+        },
+        "description": "**Method:** GET  \n**Endpoint:** `/Rawan-El-Anouti/playbooks/2`\n\n**Purpose:** Retrieves a specific security playbook, including its associated response actions.\n\n**Required Parameter:** `playbook_id` (2).\n\n**Request Body:** None.\n\n**Successful Response:** 200 OK ; Returns playbook ID 2 and its associated actions.\n\n**Authentication:** JWT Bearer Token (Security Administrator, Security Analyst, or Auditor).\n\n**Possible Errors:** 401 (Unauthenticated), 403 (Forbidden), 404 (Playbook not found)."
       },
       "response": []
     },
@@ -378,7 +159,8 @@
             "4",
             "actions"
           ]
-        }
+        },
+        "description": "**Method:** POST  \n**Endpoint:** `/Rawan-El-Anouti/playbooks/4/actions`\n\n**Purpose:** Allows authorized users to add response actions to an existing security playbook.\n\n**Required Parameters:** `playbook_id` (4), `action_description`, `step_number`.\n\n**Request Example:**\n\n``` json\n{\n  \"action_description\": \"Investigate the phishing email and identify affected accounts.\",\n  \"step_number\": 1\n}\n\n ```\n\n**Successful Response:** 201 Created ; Returns the newly created response action linked to playbook ID 4.\n\n**Authentication:** JWT Bearer Token (Security Administrator or Security Analyst).\n\n**Possible Errors:** 400 (Invalid data), 401 (Unauthenticated), 403 (Forbidden), 404 (Playbook not found)."
       },
       "response": []
     },
@@ -422,7 +204,8 @@
             "4",
             "status"
           ]
-        }
+        },
+        "description": "**Method:** PUT  \n**Endpoint:** `/Rawan-El-Anouti/actions/4/status`\n\n**Purpose:** Allows authorized users to update the progress of a response action and assign it to a user.\n\n**Required Parameters:** `action_id` (4), `status`.\n\n**Request Example:**\n\n``` json\n{\n  \"status\": \"In Progress\",\n  \"assigned_user_id\": 2\n}\n\n ```\n\n**Successful Response:** 200 OK ; Returns the updated action, including its status and assigned user.\n\n**Authentication:** JWT Bearer Token (Security Administrator or Security Analyst).\n\n**Possible Errors:** 400 (Invalid data), 401 (Unauthenticated), 403 (Forbidden), 404 (Action not found)."
       },
       "response": []
     },
@@ -456,41 +239,8 @@
             "playbooks",
             "2"
           ]
-        }
-      },
-      "response": []
-    },
-    {
-      "name": "verify deletion",
-      "request": {
-        "auth": {
-          "type": "bearer",
-          "bearer": [
-            {
-              "key": "token",
-              "value": "{{json_web_token_084b}}",
-              "type": "string"
-            }
-          ]
         },
-        "method": "GET",
-        "header": [],
-        "url": {
-          "raw": "http://127.0.0.1:5009/Rawan-El-Anouti/playbooks/2",
-          "protocol": "http",
-          "host": [
-            "127",
-            "0",
-            "0",
-            "1"
-          ],
-          "port": "5009",
-          "path": [
-            "Rawan-El-Anouti",
-            "playbooks",
-            "2"
-          ]
-        }
+        "description": "**Method:** DELETE  \n**Endpoint:** `/Rawan-El-Anouti/playbooks/2`\n\n**Purpose:** Allows a Security Administrator to permanently delete a security playbook and its associated response actions.\n\n**Required Parameter:** `playbook_id` (2).\n\n**Request Body:** None.\n\n**Successful Response:** 200 OK ; Confirms that the playbook was deleted successfully.\n\n**Authentication:** JWT Bearer Token (Security Administrator).\n\n**Possible Errors:** 401 (Unauthenticated), 403 (Forbidden), 404 (Playbook not found)."
       },
       "response": []
     }

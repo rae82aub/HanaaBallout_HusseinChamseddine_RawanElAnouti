@@ -8,118 +8,7 @@
   },
   "item": [
     {
-      "name": "retrieve user notification",
-      "request": {
-        "auth": {
-          "type": "bearer",
-          "bearer": [
-            {
-              "key": "token",
-              "value": "{{json_web_token_0sfc}}",
-              "type": "string"
-            }
-          ]
-        },
-        "method": "GET",
-        "header": [],
-        "url": {
-          "raw": "http://127.0.0.1:5008/Rawan-El-Anouti/notifications/user/5",
-          "protocol": "http",
-          "host": [
-            "127",
-            "0",
-            "0",
-            "1"
-          ],
-          "port": "5008",
-          "path": [
-            "Rawan-El-Anouti",
-            "notifications",
-            "user",
-            "5"
-          ]
-        }
-      },
-      "response": []
-    },
-    {
-      "name": "post notification with normal user (invalid)",
-      "request": {
-        "auth": {
-          "type": "bearer",
-          "bearer": [
-            {
-              "key": "token",
-              "value": "{{json_web_token_0sfc}}",
-              "type": "string"
-            }
-          ]
-        },
-        "method": "POST",
-        "header": [],
-        "body": {
-          "mode": "raw",
-          "raw": "{\n  \"user_id\": 5,\n  \"title\": \"Security Alert\",\n  \"message\": \"A suspicious login attempt was detected.\",\n  \"notification_type\": \"Security Alert\",\n  \"severity\": \"High\"\n}\n",
-          "options": {
-            "raw": {
-              "language": "json"
-            }
-          }
-        },
-        "url": {
-          "raw": "http://127.0.0.1:5008/Rawan-El-Anouti/notifications",
-          "protocol": "http",
-          "host": [
-            "127",
-            "0",
-            "0",
-            "1"
-          ],
-          "port": "5008",
-          "path": [
-            "Rawan-El-Anouti",
-            "notifications"
-          ]
-        }
-      },
-      "response": []
-    },
-    {
-      "name": "retrieving invalid notification",
-      "request": {
-        "auth": {
-          "type": "bearer",
-          "bearer": [
-            {
-              "key": "token",
-              "value": "{{json_web_token_0sfc}}",
-              "type": "string"
-            }
-          ]
-        },
-        "method": "GET",
-        "header": [],
-        "url": {
-          "raw": "http://127.0.0.1:5008/Rawan-El-Anouti/notifications/99999",
-          "protocol": "http",
-          "host": [
-            "127",
-            "0",
-            "0",
-            "1"
-          ],
-          "port": "5008",
-          "path": [
-            "Rawan-El-Anouti",
-            "notifications",
-            "99999"
-          ]
-        }
-      },
-      "response": []
-    },
-    {
-      "name": "post notification with admin access",
+      "name": "post notification",
       "request": {
         "auth": {
           "type": "bearer",
@@ -156,7 +45,8 @@
             "Rawan-El-Anouti",
             "notifications"
           ]
-        }
+        },
+        "description": "**Method:** POST  \n**Endpoint:** `/Rawan-El-Anouti/notifications`\n\n**Purpose:** Allows a Security Administrator to create and send security notifications to users.\n\n**Required Parameters:** `user_id`, `title`, `message`, `notification_type`, `severity`.\n\n**Request Example:**\n\n``` json\n{\n  \"user_id\": 5,\n  \"title\": \"Security Alert\",\n  \"message\": \"A suspicious login attempt was detected on your account.\",\n  \"notification_type\": \"Security Alert\",\n  \"severity\": \"High\"\n}\n\n ```\n\n**Successful Response (201 Created):**\n\n``` json\n{\n    \"implemented_by\": \"Rawan El Anouti\",\n    \"message\": \"Notification created successfully\",\n    \"notification\": {\n        \"creation_date\": \"2026-10-15 16:15:11\",\n        \"message\": \"A suspicious login attempt was detected on your account.\",\n        \"notification_id\": 3,\n        \"notification_type\": \"Security Alert\",\n        \"read_date\": null,\n        \"severity\": \"High\",\n        \"status\": \"Unread\",\n        \"title\": \"Security Alert\",\n        \"user_id\": 5\n    },\n    \"status\": \"success\"\n}\n\n ```\n\n_The actual response also includes the created notification's ID, recipient, type, severity, status, and timestamps._\n\n**Authentication:** JWT Bearer Token (Security Administrator).\n\n**Possible Errors:**\n\n- **400:** Missing or invalid notification information.\n    \n- **401:** Missing or invalid authentication token.\n    \n- **403:** Insufficient permissions.\n    \n- **404:** Recipient user not found."
       },
       "response": []
     },
@@ -191,7 +81,8 @@
             "user",
             "5"
           ]
-        }
+        },
+        "description": "**Method:** GET  \n**Endpoint:** `/Rawan-El-Anouti/notifications/user/5`\n\n**Purpose:** Retrieves all notifications belonging to user ID 5, including their message, severity, and current status.\n\n**Required Parameter:** `user_id` (5).\n\n**Request Body:** None.\n\n**Successful Response (200 OK):**\n\n``` json\n{\n    \"count\": 1,\n    \"implemented_by\": \"Rawan El Anouti\",\n    \"notifications\": [\n        {\n            \"creation_date\": \"2026-10-15 16:15:11\",\n            \"message\": \"A suspicious login attempt was detected on your account.\",\n            \"notification_id\": 3,\n            \"notification_type\": \"Security Alert\",\n            \"read_date\": null,\n            \"severity\": \"High\",\n            \"status\": \"Unread\",\n            \"title\": \"Security Alert\",\n            \"user_id\": 5\n        }\n    ],\n    \"status\": \"success\",\n    \"user_id\": 5\n}\n\n ```\n\n_The actual response includes additional notification details._\n\n**Authentication:** JWT Bearer Token (authorized user).\n\n**Possible Errors:**\n\n- **401:** Missing or invalid authentication token.\n    \n- **403:** Insufficient permissions."
       },
       "response": []
     },
@@ -225,7 +116,8 @@
             "notifications",
             "3"
           ]
-        }
+        },
+        "description": "**Method:** GET  \n**Endpoint:** `/Rawan-El-Anouti/notifications/3`\n\n**Purpose:** Retrieves complete information about a specific notification using its ID.\n\n**Required Parameter:** `notification_id` (3).\n\n**Request Body:** None.\n\n**Successful Response (200 OK):**\n\n``` json\n{\n    \"implemented_by\": \"Rawan El Anouti\",\n    \"notification\": {\n        \"creation_date\": \"2026-10-15 16:15:11\",\n        \"message\": \"A suspicious login attempt was detected on your account.\",\n        \"notification_id\": 3,\n        \"notification_type\": \"Security Alert\",\n        \"read_date\": null,\n        \"severity\": \"High\",\n        \"status\": \"Unread\",\n        \"title\": \"Security Alert\",\n        \"user_id\": 5\n    },\n    \"status\": \"success\"\n}\n\n ```\n\n_The actual response includes the notification message, type, and timestamps._\n\n**Authentication:** JWT Bearer Token (authorized user).\n\n**Possible Errors:**\n\n- **401:** Missing or invalid authentication token.\n    \n- **403:** Insufficient permissions.\n    \n- **404:** Notification not found."
       },
       "response": []
     },
@@ -260,7 +152,8 @@
             "3",
             "read"
           ]
-        }
+        },
+        "description": "**Method:** PUT  \n**Endpoint:** `/Rawan-El-Anouti/notifications/3/read`\n\n**Purpose:** Updates a notification's status from Unread to Read and automatically records the date and time it was read.\n\n**Required Parameter:** `notification_id` (3).\n\n**Request Body:** None.\n\n**Successful Response (200 OK):**\n\n``` json\n{\n    \"implemented_by\": \"Rawan El Anouti\",\n    \"message\": \"Notification marked as read\",\n    \"notification\": {\n        \"creation_date\": \"2026-10-15 16:15:11\",\n        \"message\": \"A suspicious login attempt was detected on your account.\",\n        \"notification_id\": 3,\n        \"notification_type\": \"Security Alert\",\n        \"read_date\": \"2026-10-15 16:26:32\",\n        \"severity\": \"High\",\n        \"status\": \"Read\",\n        \"title\": \"Security Alert\",\n        \"user_id\": 5\n    },\n    \"status\": \"success\"\n}\n\n ```\n\n_The actual response includes additional notification details._\n\n**Authentication:** JWT Bearer Token (authorized user).\n\n**Possible Errors:**\n\n- **401:** Missing or invalid authentication token.\n    \n- **403:** Insufficient permissions.\n    \n- **404:** Notification not found."
       },
       "response": []
     },
@@ -300,7 +193,8 @@
               "value": "Read"
             }
           ]
-        }
+        },
+        "description": "**Method:** GET  \n**Endpoint:** `/Rawan-El-Anouti/notifications/search?status=Read`\n\n**Purpose:** Allows authorized users to search notifications filtered by their read status.\n\n**Required Parameter:** `status=Read`\n\n**Request Body:** None.\n\n**Successful Response (200 OK):**\n\n``` json\n{\n  \"count\": 1,\n  \"filters\": {\n    \"notification_type\": null,\n    \"severity\": null,\n    \"status\": \"Read\",\n    \"user_id\": null\n  },\n  \"implemented_by\": \"Rawan El Anouti\",\n  \"notifications\": [\n    {\n      \"creation_date\": \"2026-10-15 16:15:11\",\n      \"message\": \"A suspicious login attempt was detected on your account.\",\n      \"notification_id\": 3,\n      \"notification_type\": \"Security Alert\",\n      \"read_date\": \"2026-10-15 16:26:32\",\n      \"severity\": \"High\",\n      \"status\": \"Read\",\n      \"title\": \"Security Alert\",\n      \"user_id\": 5\n    }\n  ],\n  \"status\": \"success\"\n}\n\n ```\n\n**Authentication:** JWT Bearer Token (Security Administrator, Security Analyst, or Auditor).\n\n**Possible Errors:**\n\n- **400:** Invalid search parameter.\n    \n- **401:** Missing or invalid authentication token.\n    \n- **403:** Insufficient permissions."
       },
       "response": []
     },
@@ -334,41 +228,8 @@
             "notifications",
             "3"
           ]
-        }
-      },
-      "response": []
-    },
-    {
-      "name": "get notification after deletion (error)",
-      "request": {
-        "auth": {
-          "type": "bearer",
-          "bearer": [
-            {
-              "key": "token",
-              "value": "{{json_web_token_1a1n}}",
-              "type": "string"
-            }
-          ]
         },
-        "method": "GET",
-        "header": [],
-        "url": {
-          "raw": "http://127.0.0.1:5008/Rawan-El-Anouti/notifications/3",
-          "protocol": "http",
-          "host": [
-            "127",
-            "0",
-            "0",
-            "1"
-          ],
-          "port": "5008",
-          "path": [
-            "Rawan-El-Anouti",
-            "notifications",
-            "3"
-          ]
-        }
+        "description": "**Method:** DELETE  \n**Endpoint:** `/Rawan-El-Anouti/notifications/3`\n\n**Purpose:** Allows a Security Administrator to permanently delete a notification from the database.\n\n**Required Parameter:** `notification_id` (3).\n\n**Request Body:** None.\n\n**Successful Response (200 OK):**\n\n``` json\n{\n  \"implemented_by\": \"Rawan El Anouti\",\n  \"message\": \"Notification deleted successfully\",\n  \"notification_id\": 3,\n  \"status\": \"success\"\n}\n\n ```\n\n**Authentication:** JWT Bearer Token (Security Administrator).\n\n**Possible Errors:**\n\n- **401:** Missing or invalid authentication token.\n    \n- **403:** Insufficient permissions.\n    \n- **404:** Notification not found."
       },
       "response": []
     }
