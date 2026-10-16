@@ -1,4 +1,3 @@
-
 import os
 import sqlite3
 import re
@@ -33,12 +32,17 @@ ASSETS_API = "http://127.0.0.1:5001/Hanaa-Ballout/assets"
 
 
 def get_users_connection():
+    """Connect to the Service 1 users database for authentication and role checks.
+    """
     conn = sqlite3.connect(USERS_DB)
     conn.row_factory = sqlite3.Row
     return conn
 
 
 def role_required(allowed_roles):
+    """Restrict an endpoint to active users with one of the specified roles.
+    Require a valid JWT and return 403 when access is denied.
+    """
     def decorator(fn):
         @wraps(fn)
         @jwt_required()
@@ -73,6 +77,8 @@ def role_required(allowed_roles):
 
 @app.route("/", methods=["GET"])
 def home():
+    """Return a confirmation that the Vulnerability Management Service is running.
+    """
     return jsonify({
         "message": "Vulnerability Management Service is running"
     })
@@ -81,6 +87,10 @@ def home():
 @app.route("/Hanaa-Ballout/vulnerabilities", methods=["POST"])
 @role_required(["Security Administrator"])
 def add_vulnerability():
+    """Register a vulnerability after validating its details and confirming
+    the affected asset exists through the Asset Management API.
+    Accessible only to Security Administrators.
+    """
     data = request.get_json(silent=True)
 
     if not isinstance(data, dict):
@@ -226,6 +236,9 @@ def add_vulnerability():
     "Auditor"
 ])
 def get_all_vulnerabilities():
+    """Retrieve all recorded vulnerabilities.
+    Accessible to Security Administrators, Security Analysts, and Auditors.
+    """
     conn = get_db_connection()
 
     vulnerabilities = conn.execute("""
@@ -251,6 +264,9 @@ def get_all_vulnerabilities():
     "Auditor"
 ])
 def get_vulnerability(vulnerability_id):
+    """Retrieve a vulnerability by its ID, or return 404 if not found.
+    Accessible to Security Administrators, Security Analysts, and Auditors.
+    """
     conn = get_db_connection()
 
     vulnerability = conn.execute("""
@@ -276,6 +292,10 @@ def get_vulnerability(vulnerability_id):
     "Security Analyst"
 ])
 def update_vulnerability(vulnerability_id):
+    """update permitted vulnerability fields and enforce status changes.
+    Record the resolution timestamp when a vulnerability becomes Resolved.
+    Accessible to Security Administrators and Security Analysts.
+    """
     data = request.get_json(silent=True)
 
     if not isinstance(data, dict) or not data:
@@ -440,6 +460,9 @@ def update_vulnerability(vulnerability_id):
     "Auditor"
 ])
 def search_vulnerabilities():
+    """srearchh vulnerabilities using validated CVE, severity, asset ID, or status filters.
+    Accessible to Security Administrators, Security Analysts, and Auditors.
+    """
     allowed_filters = {
         "cve_id",
         "severity_level",
@@ -534,6 +557,9 @@ def search_vulnerabilities():
 @app.route("/Hanaa-Ballout/vulnerabilities/<int:vulnerability_id>", methods=["DELETE"])
 @role_required(["Security Administrator"])
 def delete_vulnerability(vulnerability_id):
+    """ddelete a vulnerability by ID, returning 404 when it does not exist.
+    Accessible only to Security Administrators.
+    """
     conn = get_db_connection()
 
     vulnerability = conn.execute("""

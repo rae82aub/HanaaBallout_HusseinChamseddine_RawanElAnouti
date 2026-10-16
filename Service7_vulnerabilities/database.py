@@ -1,4 +1,3 @@
-
 import sqlite3
 import os
 
@@ -6,6 +5,10 @@ DATABASE = os.path.join(os.path.dirname(__file__), "database.db")
 
 
 def get_db_connection():
+    """
+    create a connection to the SQLite vulnerabilities database.
+    enable foreign key constraints and dictionary-like row access.
+    """
     conn = sqlite3.connect(DATABASE)
     conn.row_factory = sqlite3.Row
     conn.execute("PRAGMA foreign_keys = ON")
@@ -13,6 +16,12 @@ def get_db_connection():
 
 
 def init_db():
+    """
+    createe the vulnerabilities table if it does not exist.
+    Store vulnerability details, CVE identifiers, CVSS scores,
+    affected assets, severity levels, and resolution status.
+    Enforce valid CVSS scores, severity levels, and statuses.
+    """
     conn = get_db_connection()
 
     conn.execute("""
