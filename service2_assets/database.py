@@ -6,6 +6,10 @@ DATABASE = os.path.join(os.path.dirname(__file__), "database.db")
 
 
 def get_db_connection():
+    """
+    create a connection to the SQLite assets database.
+    enable foreign key constraints and dictionary-like row access.
+    """
     conn = sqlite3.connect(DATABASE)
     conn.row_factory = sqlite3.Row
     conn.execute("PRAGMA foreign_keys = ON")
@@ -13,6 +17,11 @@ def get_db_connection():
 
 
 def init_db():
+    """
+    create the assets table if it does not exist.
+    store asset details, ownership, department, criticality level,
+    and status with constraints on allowed values.
+    """
     conn = get_db_connection()
 
     conn.execute("""

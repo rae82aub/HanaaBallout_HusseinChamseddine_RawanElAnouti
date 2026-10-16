@@ -1,4 +1,3 @@
-
 from flask import Flask, request, jsonify
 from flask_jwt_extended import JWTManager, jwt_required, get_jwt_identity
 from database import get_db_connection, init_db
@@ -20,6 +19,7 @@ USERS_DB = Path(__file__).resolve().parent.parent / "service1_users" / "database
 
 
 def get_users_connection():
+    """Connect to the Service 1 users database for identity and role checks."""
     conn = sqlite3.connect(USERS_DB)
     conn.row_factory = sqlite3.Row
     return conn
@@ -27,17 +27,19 @@ def get_users_connection():
 
 @app.route("/", methods=["GET"])
 def home():
+    """return a status message confirming the Asset Management Service is running."""
     return jsonify({
         "message": "Asset Management Service is running"
     })
 
 
-# API 1: Add New Asset
 @app.route("/Hanaa-Ballout/assets", methods=["POST"])
 @jwt_required()
 def add_asset():
+    """create an asset for an active Security Administrator.
+    Validate asset details, IP address, and the existence of its owner."""
 
-    # Check authenticated user and role
+
     current_user_id = get_jwt_identity()
 
     users_conn = get_users_connection()
@@ -60,7 +62,6 @@ def add_asset():
             "message": "Permission denied"
         }), 403
 
-    # Read request data
     data = request.get_json(silent=True)
 
     if not isinstance(data, dict):
@@ -89,7 +90,6 @@ def add_asset():
                 "message": f"{field} is required"
             }), 400
 
-    # Validate asset type
     valid_types = [
         "Server",
         "Workstation",
@@ -105,7 +105,6 @@ def add_asset():
             "message": "Invalid asset type"
         }), 400
 
-    # Validate IP address
     try:
         ipaddress.ip_address(data["ip_address"])
     except (ValueError, TypeError):
@@ -136,7 +135,6 @@ def add_asset():
             "message": "Invalid asset status"
         }), 400
 
-    # Validate required text fields
     for field in ["asset_name", "department"]:
         if not isinstance(data[field], str) or not data[field].strip():
             users_conn.close()
@@ -151,7 +149,7 @@ def add_asset():
                 "message": f"Invalid {field}"
             }), 400
 
-    # Check whether the asset owner exists in Service 1
+
     owner_id = data["owner_id"]
 
     if type(owner_id) is not int or owner_id <= 0:
@@ -173,7 +171,6 @@ def add_asset():
             "message": "Asset owner does not exist"
         }), 404
 
-    # Insert asset into Service 2 database
     conn = get_db_connection()
 
     cursor = conn.execute("""
@@ -211,12 +208,13 @@ def add_asset():
     }), 201
 
 
-# API 2: Update Asset Information
 @app.route("/Hanaa-Ballout/assets/<int:asset_id>", methods=["PUT"])
 @jwt_required()
 def update_asset(asset_id):
+    """Update the allowed asset fields as an active Security Administrator.
+    Validate changes and verify any newly assigned owner exists."""
 
-    # Check authenticated user and role
+
     current_user_id = get_jwt_identity()
 
     users_conn = get_users_connection()
@@ -239,7 +237,6 @@ def update_asset(asset_id):
             "message": "Permission denied"
         }), 403
 
-    # Check whether the asset exists
     conn = get_db_connection()
 
     asset = conn.execute(
@@ -254,7 +251,6 @@ def update_asset(asset_id):
             "message": "Asset not found"
         }), 404
 
-    # Read JSON request
     data = request.get_json(silent=True)
 
     if not isinstance(data, dict) or not data:
@@ -279,7 +275,6 @@ def update_asset(asset_id):
             "message": "Request contains an invalid update field"
         }), 400
 
-    # Validate provided fields
     for field in ["asset_name", "department"]:
         if field in data:
             if not isinstance(data[field], str) or not data[field].strip():
@@ -332,7 +327,6 @@ def update_asset(asset_id):
 
     users_conn.close()
 
-    # Update only the fields included in the request
     update_fields = []
     values = []
 
@@ -368,6 +362,7 @@ def update_asset(asset_id):
 @app.route("/Hanaa-Ballout/assets/<int:asset_id>", methods=["DELETE"])
 @jwt_required()
 def delete_asset(asset_id):
+    """ddelete an existing asset; restricted to active Security Administrators."""
 
     current_user_id = get_jwt_identity()
 
@@ -419,6 +414,7 @@ def delete_asset(asset_id):
 @app.route("/Hanaa-Ballout/assets", methods=["GET"])
 @jwt_required()
 def get_all_assets():
+    """List all assets for active Security Administrators and Auditors."""
 
     current_user_id = get_jwt_identity()
 
@@ -464,6 +460,7 @@ def get_all_assets():
 @app.route("/Hanaa-Ballout/assets/<int:asset_id>", methods=["GET"])
 @jwt_required()
 def get_asset_by_id(asset_id):
+    """Retrieve an asset by ID for active Administrators, Analysts, or Auditors."""
 
     current_user_id = get_jwt_identity()
 
@@ -514,6 +511,8 @@ def get_asset_by_id(asset_id):
 @app.route("/Hanaa-Ballout/assets/search", methods=["GET"])
 @jwt_required()
 def search_assets():
+    """Search assets by supported query parameters for authorized users.
+    you can use partial matches for names/departments and exact matches for other filters."""
 
     current_user_id = get_jwt_identity()
 
