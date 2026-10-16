@@ -7,6 +7,10 @@ DB_PATH = Path(__file__).resolve().parent / "database.db"
 
 
 def get_connection():
+    """
+    create a connection to the SQLite database.
+    Enable foreign key constraints and dictionary-like row access.
+    """
     connection = sqlite3.connect(DB_PATH)
     connection.row_factory = sqlite3.Row
     connection.execute("PRAGMA foreign_keys = ON")
@@ -14,6 +18,11 @@ def get_connection():
 
 
 def create_tables():
+    """
+    create the users table if it does not exist.
+    Define user information, unique credentials, allowed roles,
+    and valid account statuses.
+    """
     connection = get_connection()
     cursor = connection.cursor()
 
@@ -48,6 +57,11 @@ def create_tables():
 
 
 def create_initial_admin():
+    """
+    create the first Security Administrator through terminal input.
+    prevent duplicate administrator initialization, validate required
+    fields, and securely hash the password before storing it.
+    """
     connection = get_connection()
 
     try:

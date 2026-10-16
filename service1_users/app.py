@@ -26,14 +26,17 @@ create_tables()
 
 @app.route("/", methods=["GET"])
 def home():
+    """Return a status message confirming that the service is running."""
     return jsonify({
         "message": "Users and Identity Management Service is running"
     })
 
 
-# API 1: User Registration
 @app.route("/Hanaa-Ballout/users/register", methods=["POST"])
 def register_user():
+    """Register a user after validating their details and password.
+    Public registration is restricted to Regular Employees; active
+    Security Administrators can assign any supported role."""
     data = request.get_json(silent=True)
 
     if not isinstance(data, dict):
@@ -134,10 +137,11 @@ def register_user():
     finally:
         connection.close()
 
-
-# API 2: User Login
 @app.route("/Hanaa-Ballout/users/login", methods=["POST"])
 def login_user():
+    """authenticate a user by username or email and password.
+    Only active accounts can log in; successful login updates the
+    last-login timestamp and returns a JWT access token."""
     data = request.get_json(silent=True)
 
     if not isinstance(data, dict):
@@ -201,10 +205,12 @@ def login_user():
     }), 200
 
 
-# API 3: Update User Information
 @app.route("/Hanaa-Ballout/users/<int:user_id>", methods=["PUT"])
 @jwt_required()
 def update_user(user_id):
+    """update a user's name, email, or department.
+    Active Security Administrators can update any user, while active
+    Regular Employees can update only their own information."""
     current_user_id = int(get_jwt_identity())
 
     connection = get_connection()
@@ -281,11 +287,11 @@ def update_user(user_id):
     finally:
         connection.close()
 
-
-# API 4: Delete User
 @app.route("/Hanaa-Ballout/users/<int:user_id>", methods=["DELETE"])
 @jwt_required()
 def delete_user(user_id):
+    """delete a user account by ID.
+    Requires an active Security Administrator account."""
     current_user_id = int(get_jwt_identity())
 
     connection = get_connection()
@@ -328,11 +334,11 @@ def delete_user(user_id):
         "user_id": user_id
     }), 200
 
-
-# API 5: Retrieve All Users
 @app.route("/Hanaa-Ballout/users", methods=["GET"])
 @jwt_required()
 def get_all_users():
+    """retrieve all users without exposing password hashes.
+    Access is limited to active Security Administrators and Auditors."""
     current_user_id = int(get_jwt_identity())
 
     connection = get_connection()
@@ -364,17 +370,18 @@ def get_all_users():
 
     return jsonify(users), 200
 
-
-# API 6: Retrieve User By Username
 @app.route("/Hanaa-Ballout/users/<string:username>", methods=["GET"])
 @jwt_required()
 def get_user_by_username(username):
+    """Retrieve a user by username without exposing the password hash.
+    Active Administrators and Auditors can view any user; active
+    Regular Employees can view only their own account."""
     current_user_id = int(get_jwt_identity())
 
     connection = get_connection()
     cursor = connection.cursor()
 
-    # Check the logged-in user
+    
     cursor.execute(
         "SELECT user_id, role, account_status FROM users WHERE user_id = ?",
         (current_user_id,)
