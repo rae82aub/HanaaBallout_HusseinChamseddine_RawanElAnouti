@@ -1,83 +1,273 @@
 # Security Incident Detection and Response Management System
 
-## Services 1, 2, and 7 — Hanaa Ballout
+## EECE 435L | Sprint 1
 
-See the service folders for implementation details.
+This project is a backend system developed using Python, Flask, SQLite, and JWT authentication.
 
----
+The system helps organizations manage users, IT assets, security incidents, threats, audit logs, reports, vulnerabilities, notifications, and automated response playbooks.
 
+The backend is divided into nine services. Each service has its own Flask application and API endpoints.
 
-# Security Incident Detection and Response Management System
+## Team Members
 
-## Sprint I: Backend Development
+| Team Member | Services |
+|---|---|
+| Hanaa Ballout | Services 1, 2, and 7 |
+| Hussein Chamseddine | Services 4, 5, and 6 |
+| Rawan El Anouti | Services 3, 8, and 9 |
 
-**Services Implemented:** 3, 8, and 9  
-**Implemented by:** Rawan El Anouti  
-**Framework:** Flask  
-**Database:** SQLite  
-**Authentication:** JSON Web Tokens (JWT)  
-**API Testing:** Postman
+## 1. Project Services
 
-## 1. Project Overview
+| Service | Name | Folder | Port |
+|---|---|---|---|
+| 1 | Users and Identity Management | `service1_users` | 5000 |
+| 2 | Asset Management | `service2_assets` | 5001 |
+| 3 | Incident Management | `service3_incidents` | 5003 |
+| 4 | Threat Intelligence | `service4_threats` | 5004 |
+| 5 | Security Audit Logging | `service5_logs` | 5005 |
+| 6 | Security Reports | `service6_reports` | 5006 |
+| 7 | Vulnerability Management | `Service7_vulnerabilities` | 5002 |
+| 8 | Notification and Alert Management | `service8_notifications` | 5008 |
+| 9 | Security Playbooks and Response Automation | `service9_playbooks` | 5009 |
 
-This repository contains my backend contributions to the Security Incident Detection and Response Management System, developed as part of Sprint I.
+### Service 1: Users and Identity Management
 
-The system provides RESTful APIs for managing cybersecurity incidents, notifications, security playbooks, and response actions.
+**Implemented by Hanaa Ballout**
 
-My contribution consists of three independent Flask services:
+This service manages user accounts and authentication.
 
-- Service 3: Incident Management
-- Service 8: Notification and Alert Management
-- Service 9: Security Playbook and Response Automation
+Main features:
+- Register new users
+- Log in using a username or email and password
+- Generate JWT access tokens
+- Update user information
+- Delete users
+- Retrieve user information
+- Manage access based on user roles
 
-These services use SQLite databases, JWT authentication, role-based access control, input validation, and HTTP status codes.
+Service 1 provides authentication for the other services.
 
-Audit logging integration with Service 5 was also implemented and tested.
+### Service 2: Asset Management
+
+**Implemented by Hanaa Ballout**
+
+This service manages the organization's IT assets.
+
+Main features:
+- Register new assets
+- Update asset information
+- Delete assets
+- Retrieve assets
+- Search for assets
+- Assign assets to users
+- Manage asset criticality and status
+
+Assets can include servers, workstations, databases, applications, network devices, and cloud resources.
+
+### Service 3: Incident Management
+
+**Implemented by Rawan El Anouti**
+
+This service manages reported security incidents.
+
+Main features:
+- Create an incident
+- Retrieve all incidents
+- Retrieve an incident by ID
+- Assign an incident to an analyst
+- Update an incident's status
+- Add investigation notes
+
+Incidents contain information such as title, description, category, severity, affected asset, reporter, and status.
+
+Incident categories include malware infections, unauthorized access, phishing attacks, data leakage, account compromise, and denial of service attacks.
+
+Incident management actions are also recorded in the security audit logs.
+
+### Service 4: Threat Intelligence
+
+**Implemented by Hussein Chamseddine**
+
+This service stores and manages security threat indicators.
+
+Main features:
+- Add threat indicators
+- Retrieve threats
+- Update threat information
+- Delete threats
+- Search for threats
+- Validate threat information
+
+Threat indicators include IP addresses, domains, file hashes, malware signatures, and other indicators.
+
+### Service 5: Security Audit Logging
+
+**Implemented by Hussein Chamseddine**
+
+This service records important activities in the system.
+
+Main features:
+- Create audit logs
+- Retrieve all logs
+- Retrieve a specific log
+- Search audit logs
+- Retrieve logs by user
+- Delete logs with the required permissions
+
+Audit records can include the user, action, description, severity, related service, and timestamp.
+
+Other services can record important operations through the shared audit logging functionality in `common.py`.
+
+### Service 6: Security Reports
+
+**Implemented by Hussein Chamseddine**
+
+This service generates security reports using information from other services.
+
+Main reports:
+- Overall security summary
+- Incident report
+- Asset report
+- Threat report
+- Vulnerability report
+- Activity report
+
+The reports help security administrators and auditors review system activity and security information.
+
+### Service 7: Vulnerability Management
+
+**Implemented by Hanaa Ballout**
+
+This service manages vulnerabilities affecting the organization's assets.
+
+Main features:
+- Register vulnerabilities
+- Retrieve vulnerabilities
+- Update vulnerability information
+- Delete vulnerabilities
+- Search and manage vulnerability records
+
+This service helps track security weaknesses and the assets affected by them.
+
+### Service 8: Notification and Alert Management
+
+**Implemented by Rawan El Anouti**
+
+This service manages security notifications sent to users.
+
+Main features:
+- Create notifications
+- Retrieve notifications
+- Retrieve a specific notification
+- Update notification information
+- Mark notifications as read
+- Delete notifications
+
+Notifications can be related to incident assignments, security alerts, system notifications, threats, and vulnerabilities.
+
+Notification records include their type, severity, status, recipient, and related information.
+
+Important notification actions can also be recorded in Service 5.
+
+### Service 9: Security Playbooks and Response Automation
+
+**Implemented by Rawan El Anouti**
+
+This service manages security playbooks and response actions.
+
+Main features:
+- Create security playbooks
+- Retrieve playbooks
+- Delete playbooks
+- Create response actions
+- Retrieve response actions
+- Update response action status
+
+Each playbook can contain multiple response steps.
+
+Response actions can have statuses such as Pending, In Progress, and Completed.
+
+Playbook and response action changes can also be recorded in Service 5.
 
 ## 2. Technologies Used
 
-- Python 3
-- Flask
-- Flask-JWT-Extended
-- SQLite
-- Requests
-- Python-dotenv
-- Postman
-- Git and GitHub
+| Technology | Purpose |
+|---|---|
+| Python | Backend programming |
+| Flask | REST API development |
+| SQLite | Database storage |
+| Flask-JWT-Extended | JWT authentication |
+| Werkzeug | Password hashing and verification |
+| python-dotenv | Environment configuration |
+| Requests | Communication between services |
+| Postman | API testing |
+| Git and GitHub | Version control and teamwork |
 
 ## 3. Project Structure
 
 ```text
-servicesrawan/
+Security Incident Detection and Response Management System/
+│
+├── service1_users/
+│   ├── app.py
+│   └── database.py
+│
+├── service2_assets/
+│   ├── app.py
+│   └── database.py
+│
 ├── service3_incidents/
 │   ├── app.py
 │   └── database.py
+│
+├── service4_threats/
+│   ├── app.py
+│   └── database.py
+│
+├── service5_logs/
+│   ├── app.py
+│   └── database.py
+│
+├── service6_reports/
+│   └── app.py
+│
+├── Service7_vulnerabilities/
+│   ├── app.py
+│   └── database.py
+│
 ├── service8_notifications/
 │   ├── app.py
 │   └── database.py
+│
 ├── service9_playbooks/
 │   ├── app.py
 │   └── database.py
-├── common.py
+│
 ├── postman/
+├── common.py
 ├── requirements.txt
+├── .env.example
 ├── .gitignore
 └── README.md
 ```
 
-SQLite database files and environment files are excluded from Git.
+Each service stores its data in a local SQLite database named `database.db`, except Service 6, which reads information from other services.
 
-Service 1 and Service 5 are maintained by other team members and are required for certain integration features.
+The `.env` file and SQLite database files are excluded from Git tracking.
 
 ## 4. Installation and Setup
 
 ### Step 1: Clone the Repository
 
 ```bash
-git clone -b rawan-services-3-8-9 https://github.com/rae82aub/HanaaBallout_HusseinChamseddine_RawanElAnouti.git
+git clone https://github.com/rae82aub/HanaaBallout_HusseinChamseddine_RawanElAnouti.git
 ```
 
-Navigate into the cloned project folder.
+Move into the project folder:
+
+```bash
+cd HanaaBallout_HusseinChamseddine_RawanElAnouti
+```
 
 ### Step 2: Create a Virtual Environment
 
@@ -85,563 +275,320 @@ Navigate into the cloned project folder.
 python3 -m venv .venv
 ```
 
-Activate it on macOS or Linux:
+Activate the virtual environment.
+
+On macOS or Linux:
 
 ```bash
 source .venv/bin/activate
 ```
 
+On Windows:
+
+```bash
+.venv\Scripts\activate
+```
+
 ### Step 3: Install Dependencies
 
 ```bash
-python -m pip install -r requirements.txt
-python -m pip install python-dotenv
+pip install -r requirements.txt
 ```
 
-### Step 4: Configure JWT Authentication
+### Step 4: Configure Environment Variables
 
-All protected services must use the same JWT secret key as Service 1.
-
-Set the shared secret through an environment variable:
+Create a `.env` file from the example:
 
 ```bash
-export JWT_SECRET_KEY='YOUR_SHARED_JWT_SECRET'
+cp .env.example .env
 ```
 
-Replace the placeholder with the secret agreed upon by the team.
+Set the `JWT_SECRET_KEY` inside `.env`.
 
-Never commit JWT secrets or access tokens to GitHub.
+All services must use the same JWT secret to validate tokens generated by Service 1.
 
-### Step 5: Configure the Users Database
+Keep `.env` private. Do not upload passwords, access tokens, or secret keys to GitHub.
 
-Services 3, 8, and 9 require access to Service 1's Users database for authentication and authorization checks.
+### Step 5: Initialize the Databases
 
-The default expected location is:
+Start by initializing the Service 1 database:
 
-```text
-service1_users/database.db
+```bash
+python service1_users/database.py
 ```
 
-Ensure the Service 1 database is available at the configured path and contains the required test users.
+Follow the terminal instructions to create the initial Security Administrator.
 
-### Step 6: Run the Services
+Then initialize Services 2, 4, 5, and 7:
 
-Start each service in a separate terminal.
+```bash
+python service2_assets/database.py
+python service4_threats/database.py
+python service5_logs/database.py
+python Service7_vulnerabilities/database.py
+```
 
-Service 3:
+Initialize Services 3, 8, and 9:
+
+```bash
+python -c "from service3_incidents.database import create_tables; create_tables()"
+python -c "from service8_notifications.database import create_tables; create_tables()"
+python -c "from service9_playbooks.database import create_tables; create_tables()"
+```
+
+The project uses SQLite tables created with `CREATE TABLE IF NOT EXISTS`.
+
+## 5. Running the Services
+
+Open a separate terminal for each service.
+
+Activate the virtual environment in each terminal before running the Flask application.
+
+### Service 1
+
+```bash
+python service1_users/app.py
+```
+
+Runs on `http://127.0.0.1:5000`
+
+### Service 2
+
+```bash
+python service2_assets/app.py
+```
+
+Runs on `http://127.0.0.1:5001`
+
+### Service 3
 
 ```bash
 python service3_incidents/app.py
 ```
 
-Service 8:
+Runs on `http://127.0.0.1:5003`
+
+### Service 4
+
+```bash
+python service4_threats/app.py
+```
+
+Runs on `http://127.0.0.1:5004`
+
+### Service 5
+
+```bash
+python service5_logs/app.py
+```
+
+Runs on `http://127.0.0.1:5005`
+
+### Service 6
+
+```bash
+python service6_reports/app.py
+```
+
+Runs on `http://127.0.0.1:5006`
+
+### Service 7
+
+```bash
+python Service7_vulnerabilities/app.py
+```
+
+Runs on `http://127.0.0.1:5002`
+
+### Service 8
 
 ```bash
 python service8_notifications/app.py
 ```
 
-Service 9:
+Use the port configured in its `app.py`.
+
+### Service 9
 
 ```bash
 python service9_playbooks/app.py
 ```
 
-Make sure each terminal has the shared JWT secret configured.
+Use the port configured in its `app.py`.
 
-## 5. Service 3: Incident Management
+Start Service 1 first so the other services can validate user accounts and roles.
 
-**Port:** 5003  
-**Base URL:**
+## 6. Authentication and Authorization
 
-```text
-http://127.0.0.1:5003/Rawan-El-Anouti
-```
+The backend uses JWT authentication.
 
-### Responsibilities
-
-Service 3 manages cybersecurity incidents throughout their lifecycle.
-
-Main features include:
-
-- Creating cybersecurity incidents
-- Retrieving incident records
-- Assigning incidents to Security Analysts
-- Updating incident statuses
-- Adding investigation notes
-- Enforcing role-based permissions
-- Validating incident information
-- Sending incident assignment notifications
-- Recording important operations in Service 5
-
-### API Endpoints
-
-| Method | Endpoint | Description |
-|---|---|---|
-| POST | `/incidents` | Create an incident |
-| GET | `/incidents` | Retrieve all incidents |
-| GET | `/incidents/{id}` | Retrieve a specific incident |
-| PUT | `/incidents/{id}/assign` | Assign an incident to an analyst |
-| PUT | `/incidents/{id}/status` | Update incident status |
-| POST | `/incidents/{id}/notes` | Add an investigation note |
-
-### Incident Lifecycle
-
-```text
-Open
-  |
-  v
-Under Investigation
-  |
-  v
-Mitigated
-  |
-  v
-Resolved
-  |
-  v
-Closed
-```
-
-Invalid status transitions are rejected.
-
-### Example Request
-
-**POST** `/Rawan-El-Anouti/incidents`
-
-```json
-{
-  "title": "Phishing Email Detected",
-  "description": "An employee received a suspicious email.",
-  "category": "Phishing attack",
-  "severity": "Medium",
-  "affected_asset": 1
-}
-```
-
-A successful request returns HTTP `201 Created` with the newly created incident.
-
-## 6. Service 8: Notification and Alert Management
-
-**Port:** 5008  
-**Base URL:**
-
-```text
-http://127.0.0.1:5008/Rawan-El-Anouti
-```
-
-### Responsibilities
-
-Service 8 manages cybersecurity notifications delivered to system users.
-
-Main features include:
-
-- Creating notifications
-- Retrieving user notifications
-- Retrieving individual notifications
-- Marking notifications as read
-- Searching notifications using filters
-- Deleting notifications
-- Enforcing role-based permissions
-- Recording important operations in Service 5
-
-### API Endpoints
-
-| Method | Endpoint | Description |
-|---|---|---|
-| POST | `/notifications` | Create a notification |
-| GET | `/notifications/user/{user_id}` | Retrieve notifications for a user |
-| GET | `/notifications/{id}` | Retrieve a specific notification |
-| PUT | `/notifications/{id}/read` | Mark a notification as read |
-| GET | `/notifications/search` | Search notifications using filters |
-| DELETE | `/notifications/{id}` | Delete a notification |
-
-### Example Request
-
-**POST** `/Rawan-El-Anouti/notifications`
-
-```json
-{
-  "user_id": 2,
-  "title": "Security Alert",
-  "message": "A suspicious login attempt was detected.",
-  "notification_type": "Security Alert",
-  "severity": "High"
-}
-```
-
-A successful request returns HTTP `201 Created`.
-
-New notifications initially have the status `Unread`.
-
-## 7. Service 9: Security Playbook and Response Automation
-
-**Port:** 5009  
-**Base URL:**
-
-```text
-http://127.0.0.1:5009/Rawan-El-Anouti
-```
-
-### Responsibilities
-
-Service 9 provides structured security response procedures through playbooks and response actions.
-
-Main features include:
-
-- Creating security playbooks
-- Retrieving playbooks
-- Adding response actions
-- Assigning response actions to users
-- Updating action statuses
-- Enforcing sequential action execution
-- Deleting playbooks
-- Recording important operations in Service 5
-
-### API Endpoints
-
-| Method | Endpoint | Description |
-|---|---|---|
-| POST | `/playbooks` | Create a playbook |
-| GET | `/playbooks` | Retrieve all playbooks |
-| GET | `/playbooks/{id}` | Retrieve a specific playbook |
-| POST | `/playbooks/{id}/actions` | Add a response action |
-| PUT | `/actions/{id}/status` | Update a response action |
-| DELETE | `/playbooks/{id}` | Delete a playbook |
-
-### Response Action Lifecycle
-
-```text
-Pending
-  |
-  v
-In Progress
-  |
-  v
-Completed
-```
-
-Response actions follow the required sequence. A previous action must be completed before the next action can begin.
-
-### Example Request
-
-**POST** `/Rawan-El-Anouti/playbooks`
-
-```json
-{
-  "playbook_name": "Phishing Incident Response",
-  "description": "Standard response procedure for phishing incidents.",
-  "incident_category": "Phishing attack",
-  "severity": "High"
-}
-```
-
-A successful request returns HTTP `201 Created`.
-
-## 8. Authentication and Authorization
-
-Authentication is handled through Service 1, developed by Hanaa Ballout.
-
-Service 1 generates JWT access tokens after successful login.
-
-The supported user roles are:
-
-- Security Administrator
-- Security Analyst
-- Regular Employee
-- Auditor
-
-Protected endpoints require a valid JWT access token.
+Users log in through Service 1 and receive an access token.
 
 ### Login Endpoint
 
+**POST**
+
 ```text
-POST http://127.0.0.1:5000/Hanaa-Ballout/users/login
+http://127.0.0.1:5000/Hanaa-Ballout/users/login
 ```
 
 Example request:
 
 ```json
 {
-  "username": "YOUR_TEST_USERNAME",
-  "password": "YOUR_TEST_PASSWORD"
+  "username": "admin_test",
+  "password": "YOUR_PASSWORD"
 }
 ```
 
-The response includes an `access_token`.
+A successful login returns an access token and information about the authenticated user.
 
-In Postman, select:
+For protected endpoints, open the Authorization tab in Postman, select Bearer Token, and paste the access token.
 
-```text
-Authorization > Bearer Token
-```
+### User Roles
 
-Paste the access token into the token field.
+The system uses role-based authorization.
 
-Access permissions depend on the user's role and the requested operation.
+Roles include:
+- Security Administrator
+- Security Analyst
+- Security Auditor
+- Regular Employee
 
-## 9. Database Design
+Each service checks whether the authenticated user's role is allowed to perform the requested operation.
 
-Each service uses SQLite for persistent storage.
+Requests without a valid token or the required permissions are rejected.
 
-### Service 3
+## 7. Main API Endpoints
 
-Tables:
+The following examples show the main routes used by the services.
 
-- `incidents`
-- `investigation_notes`
+| Service | Method | Endpoint |
+|---|---|---|
+| 1 | POST | `/Hanaa-Ballout/users/register` |
+| 1 | POST | `/Hanaa-Ballout/users/login` |
+| 1 | GET | `/Hanaa-Ballout/users` |
+| 2 | POST | `/Hanaa-Ballout/assets` |
+| 2 | GET | `/Hanaa-Ballout/assets` |
+| 3 | POST | `/Rawan-El-Anouti/incidents` |
+| 3 | GET | `/Rawan-El-Anouti/incidents` |
+| 3 | PUT | `/Rawan-El-Anouti/incidents/<incident_id>/assign` |
+| 3 | PUT | `/Rawan-El-Anouti/incidents/<incident_id>/status` |
+| 3 | POST | `/Rawan-El-Anouti/incidents/<incident_id>/notes` |
+| 4 | GET | `/Hussein-Chamseddine/threats` |
+| 5 | GET | `/Hussein-Chamseddine/logs` |
+| 5 | GET | `/Hussein-Chamseddine/logs/search` |
+| 6 | GET | `/Hussein-Chamseddine/reports/summary` |
+| 6 | GET | `/Hussein-Chamseddine/reports/incidents` |
+| 6 | GET | `/Hussein-Chamseddine/reports/assets` |
+| 6 | GET | `/Hussein-Chamseddine/reports/threats` |
+| 6 | GET | `/Hussein-Chamseddine/reports/vulnerabilities` |
+| 6 | GET | `/Hussein-Chamseddine/reports/activity` |
 
-Investigation notes are linked to incidents through `incident_id`.
+The routes for Services 7, 8, and 9, along with additional operations for all services, are available in their respective `app.py` files and Postman collections.
 
-### Service 8
+## 8. Postman Testing
 
-Table:
+Postman is used to test the REST APIs.
 
-- `notifications`
+The `postman` folder contains API collections developed by the team members.
 
-Notifications contain information such as the recipient user ID, title, message, type, severity, status, and timestamps.
+### How to Test
 
-### Service 9
+1. Start the required Flask services.
+2. Open Postman.
+3. Import the relevant collection from the `postman` folder.
+4. Log in through Service 1.
+5. Copy the returned JWT access token.
+6. Set the Bearer Token for protected requests.
+7. Send requests and review the responses.
+8. Check the corresponding SQLite database when necessary.
 
-Tables:
+### Test Cases
 
-- `playbooks`
-- `response_actions`
+The APIs can be tested using:
+- Successful requests
+- Missing required fields
+- Invalid field values
+- Invalid or missing JWT tokens
+- Insufficient user permissions
+- Nonexistent record IDs
+- Invalid status changes
+- Duplicate records
+- Search and retrieval operations
 
-Response actions are linked to playbooks through `playbook_id`.
-
-### Cross-Service References
-
-Some records reference users and assets maintained by other services.
-
-The relevant IDs are validated or retrieved through the available shared database and service integration mechanisms.
-
-## 10. Audit Logging Integration
-
-Audit logging was integrated with Hussein Chamseddine's Service 5.
-
-The shared `write_audit_log()` function records security-related operations in the Service 5 SQLite database.
-
-### Service 3 Audit Events
-
-- Incident creation
-- Incident assignment
-- Incident status update
-- Investigation note creation
-
-### Service 8 Audit Events
-
-- Notification creation
-- Notification marked as read
-- Notification deletion
-
-### Service 9 Audit Events
-
-- Playbook creation
-- Response action creation
-- Response action status update
-- Playbook deletion
-
-A total of 11 operation types were tested successfully.
-
-### Audit Log Information
-
-Each recorded event contains:
-
-- User ID
-- Action
-- Description
-- Severity
-- Related service
-- Timestamp
-
-### Integration Requirements
-
-The Service 5 database must be accessible at the path configured by `common.py`.
-
-For the local integration tests, the expected default path was:
-
-```text
-service5_logs/database.db
-```
-
-Service 5 is developed by Hussein Chamseddine and should be included during final team integration.
-
-The logging mechanism writes to the configured SQLite database. It does not require a separate Postman request for each audit event.
-
-## 11. Error Handling and Validation
-
-The services validate request data and enforce authorization rules.
-
-Common HTTP response codes include:
+Postman responses can include status codes such as:
 
 | Status Code | Meaning |
 |---|---|
-| 200 OK | Operation completed successfully |
-| 201 Created | New record created successfully |
-| 400 Bad Request | Invalid or missing input |
-| 401 Unauthorized | Missing or invalid JWT token |
-| 403 Forbidden | Insufficient permissions |
-| 404 Not Found | Requested record does not exist |
-| 409 Conflict | Conflicting or duplicate data |
+| 200 | Request successful |
+| 201 | Resource created |
+| 400 | Invalid request |
+| 401 | Authentication required or invalid |
+| 403 | Permission denied |
+| 404 | Resource not found |
+| 409 | Conflict with an existing record |
 
-Additional validation includes:
+The exact status code depends on the endpoint and the validation rules.
 
-- Incident severity and category validation
-- Sequential incident status transitions
-- Verification of assigned analyst roles
-- Notification type and severity validation
-- Restricted notification deletion
-- Playbook category and severity validation
-- Unique response action step numbers
-- Sequential response action status transitions
+## 9. Integration Between Services
 
-## 12. Postman Testing
+The nine services work together through shared user authentication, database references, and REST API requests.
 
-The APIs were tested using Postman.
+Examples of integration include:
 
-Testing included:
+**User Authentication:** Service 1 generates JWT tokens that other services use to authenticate requests.
 
-- Successful API requests
-- Invalid input handling
-- Missing or nonexistent records
-- Unauthorized role access
-- JWT-based authentication
-- Incident lifecycle updates
-- Notification status updates
-- Playbook and response action management
-- Audit logging integration with Service 5
+**Incident Management:** Service 3 links reported incidents to users and affected assets.
 
-Postman collection files are maintained in the `postman/` directory.
+**Audit Logging:** Services can record important actions in Service 5 using the shared functions in `common.py`.
 
-To use a collection:
+**Security Reports:** Service 6 collects information from other services to generate reports.
 
-1. Open Postman.
-2. Select Import.
-3. Select the relevant collection JSON file.
-4. Configure the local service URLs.
-5. Obtain a valid JWT token from Service 1.
-6. Execute the requests.
+**Response Playbooks:** Service 9 manages structured response actions related to security operations.
 
-The services must be running before sending requests.
+These integrations allow the backend services to support a single security management system.
 
-## 13. GitHub and Version Control
+## 10. GitHub Collaboration
 
-Development branch:
+The project was developed using Git and GitHub.
 
-```text
-rawan-services-3-8-9
-```
+Each team member worked on their assigned services in a separate feature branch.
 
-Repository:
-
-https://github.com/rae82aub/HanaaBallout_HusseinChamseddine_RawanElAnouti
-
-Git and GitHub were used for source control, separate team contributions, and integration work.
-
-The audit logging integration was developed and tested on a temporary branch before the changes were transferred to `rawan-services-3-8-9`.
-
-## 14. Team Responsibilities
-
-| Team Member | Services |
+| Branch | Purpose |
 |---|---|
-| Hanaa Ballout | 1, 2, and 7 |
-| Hussein Chamseddine | 4, 5, and 6 |
-| Rawan El Anouti | 3, 8, and 9 |
+| `hanaa-services-1-2-7` | Hanaa's services |
+| `hussein-services-4-5-6` | Hussein's services |
+| `rawan-services-3-8-9` | Rawan's services |
+| `sprint1-integration` | Combined implementation |
+| `main` | Shared project branch |
 
-Each member developed and tested their assigned backend services.
+The feature branches were merged into `sprint1-integration` to combine the nine services and resolve merge conflicts.
 
-The final integration combines the nine services into one cybersecurity management system.
+The integration was then prepared for merging into `main` through a GitHub pull request.
 
-## 15. Notes
+## 11. Current Project Status
 
-- This branch contains Rawan El Anouti's contributions to Sprint I.
-- The project is backend-only for Sprint I.
-- Flask development servers are intended for local testing.
-- All services must share the correct JWT configuration.
-- Local SQLite databases and JWT secrets must not be committed.
-- External service dependencies must be configured during team integration.
-- Audit logging integration has been tested locally for Services 3, 8, and 9.
+The following integration checks have been completed:
 
+- All nine service folders were combined.
+- All Python files passed a syntax check.
+- All eight SQLite databases were initialized.
+- Shared database paths were updated for the integrated project.
+- Service 1 started successfully.
+- JWT authentication between Services 1 and 5 was tested successfully.
+- Service 2 successfully created a test asset.
+- Service 3 started successfully.
+- The integrated code was pushed to GitHub.
 
----
+Complete end-to-end testing of every service in the merged project has not yet been performed.
 
-# Hussein Chamseddine — Services 4, 5, and 6
+## 12. Team Contributions
 
-This folder is part of the EECE 435L Sprint 1 backend for the Security Incident Detection and Response Management System.
+**Hanaa Ballout:** Developed user and identity management, asset management, and vulnerability management.
 
-**Implemented by:** Hussein Chamseddine
+**Hussein Chamseddine:** Developed threat intelligence, security audit logging, and security reports.
 
-| Service | Folder | Port | Route prefix |
-| --- | --- | --- | --- |
-| 4. Threat Intelligence | `service4_threats` | 5004 | `/Hussein-Chamseddine/threats` |
-| 5. Security Audit Logging | `service5_logs` | 5005 | `/Hussein-Chamseddine/logs` |
-| 6. Security Reports | `service6_reports` | 5006 | `/Hussein-Chamseddine/reports` |
+**Rawan El Anouti:** Developed incident management, notification and alert management, and security playbooks and response automation.
 
-Login and user roles come from Service 1 (`Hanaa-Ballout`). Use the same `JWT_SECRET_KEY` as Service 1.
-
-## Setup
-
-```bash
-python3 -m venv .venv
-source .venv/bin/activate
-pip install -r requirements.txt
-cp .env.example .env
-```
-
-Put the same `JWT_SECRET_KEY` value used in Hanaa's Service 1 into `.env`.
-
-Start each service in its own terminal from this folder:
-
-```bash
-python service4_threats/app.py
-python service5_logs/app.py
-python service6_reports/app.py
-```
-
-Service 1 should already be running on port 5000 so JWT identities and roles can be checked.
-
-## Service 4 — Threat Intelligence
-
-Stores searchable threat indicators: IP Address, Domain, File Hash, Malware Signature, and Other.
-
-- Validates IP, domain, and hash formats
-- Severity: Low, Medium, High, Critical
-- Rejects duplicate type + value pairs
-- Add / update / delete: Security Administrator
-- List / get: Administrator, Analyst, Auditor
-- Search: Administrator, Analyst
-- Regular employees have no access
-- Analysts cannot delete threats
-
-## Service 5 — Security Audit Logging
-
-Stores immutable activity records. There is no update endpoint.
-
-Automatic logs are written for unauthorized access attempts and data modifications in Services 4, 5, and 6. Login, user creation, user deletion, and role-change events can be recorded with `POST /Hussein-Chamseddine/logs`.
-
-- Create / delete: Security Administrator
-- List all / logs by user: Administrator, Auditor
-- Get one / search: Administrator, Auditor, Analyst
-- Regular employees have no access
-- Severity: Information, Warning, Error, Critical
-
-## Service 6 — Security Reports
-
-Read-only reports for Security Administrators and Auditors only.
-
-Reports try teammate REST APIs first (users, assets, incidents, vulnerabilities) and fall back to those SQLite databases if a service is not running. Threat and activity numbers come from this project's own databases.
-
-- `GET /reports/summary`
-- `GET /reports/incidents`
-- `GET /reports/assets`
-- `GET /reports/threats`
-- `GET /reports/vulnerabilities`
-- `GET /reports/activity`
-
-## Postman
-
-Import `postman/Hussein Chamseddine-postman-collection-services-4-5-6.postman_collection.json`.
-
-1. Log in through Service 1 and copy the access token into the collection `access_token` variable.
-2. Run the Service 4, 5, and 6 requests.
-3. Capture screenshots of successful calls, failed authorization, missing IDs, searches, and the matching SQLite rows.
+All three team members contributed to the backend implementation and GitHub collaboration.
