@@ -8,18 +8,10 @@ from flask_jwt_extended import get_jwt_identity, jwt_required
 from dotenv import load_dotenv
 
 PROJECT_DIR = Path(__file__).resolve().parent
-SPRINT_ROOT = PROJECT_DIR.parent
-HANAA_DIR = (
-    SPRINT_ROOT
-    / "HanaaBallout_HusseinChamseddine_RawanElAnouti-hanaa-services-1-2-7"
-)
-RAWAN_DIR = (
-    SPRINT_ROOT
-    / "HanaaBallout_HusseinChamseddine_RawanElAnouti-rawan-services-3-8-9"
-)
+HANAA_DIR = PROJECT_DIR
+RAWAN_DIR = PROJECT_DIR
 
 load_dotenv(PROJECT_DIR / ".env")
-load_dotenv(HANAA_DIR / ".env")
 
 PREFIX = "/Hussein-Chamseddine"
 LOGS_DB = Path(
