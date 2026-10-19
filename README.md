@@ -1,5 +1,3 @@
-# Security Incident Detection and Response Management System
-
 ## EECE 435L | Sprint 1
 
 This project is a backend system developed using Python, Flask, SQLite, and JWT authentication.
