@@ -1,0 +1,709 @@
+{
+  "info": {
+    "_postman_id": "64ce6c34-7205-4566-8774-aa6902b99a17",
+    "name": "Hanaa Ballout-postman-collection-services-1-2-7",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "55693213",
+    "_collection_link": "https://go.postman.co/collection/55693213-64ce6c34-7205-4566-8774-aa6902b99a17?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "Service 1 - Users and Identity Management",
+      "item": [
+        {
+          "name": "User Register",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"full_name\": \"Security Analyst\",\r\n  \"username\": \"analyst1\",\r\n  \"email\": \"analyst@example.com\",\r\n  \"password\": \"Test123456789\",\r\n  \"department\": \"Cyber Security\",\r\n  \"role\" : \"Security Analyst\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/Hanaa-Ballout/users/register",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "Hanaa-Ballout",
+                "users",
+                "register"
+              ]
+            },
+            "description": "**API Name:** User Registration\n\n**Purpose:** Allows new users to register an account. Security Administrators can register users with different roles, while regular users can register their own accounts.\n\n**HTTP Method:** POST\n\n**Endpoint:** `/Hanaa-Ballout/users/register`\n\n**Required Request Body (JSON):**\n\n```\n{\n  \"full_name\": \"Test User\",\n  \"username\": \"testuser\",\n  \"email\": \"testuser@example.com\",\n  \"password\": \"Test123456789\",\n  \"department\": \"IT\",\n  \"role\": \"Regular Employee\"\n}\n\n ```\n\n**Successful Response - 201 Created:**\n\n```\n{\n  \"message\": \"User registered successfully\",\n  \"user_id\": 1\n}\n\n ```\n\n**Possible Error Responses:**\n\n- 400 Bad Request: Missing required fields, invalid email, invalid role, or password shorter than eight characters.\n    \n- 403 Forbidden: Unauthorized role assignment or registration.\n    \n- 409 Conflict: Username or email already exists.\n    \n\n**Authentication and Authorization:** Public registration is allowed for Regular Employee accounts. Assigning other roles requires a valid Security Administrator JWT token.\n\n**Database Interaction:** Creates a new user record in the SQLite `users` table. Passwords are stored as hashes rather than plain text."
+          },
+          "response": []
+        },
+        {
+          "name": "Post user login",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"username\": \"hsb14\",\n  \"password\": \"ml12345\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/Hanaa-Ballout/users/login",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "Hanaa-Ballout",
+                "users",
+                "login"
+              ]
+            },
+            "description": "**API Name:** User Login\n\n**Purpose:** Authenticates registered users by verifying their username or email and password before allowing access to protected APIs.\n\n**HTTP Method:** POST\n\n**Endpoint:** `/Hanaa-Ballout/users/login`\n\n**Required Request Body (JSON):**\n\n```\n{\n  \"username\": \"testuser6\",\n  \"password\": \"Test123456789\"\n}\n\n ```\n\nAlternatively, users can log in using their email instead of their username.\n\n**Successful Response -200 OK:**\n\n```\n{\n  \"message\": \"Login successful\",\n  \"user_id\": 6,\n  \"username\": \"testuser6\",\n  \"role\": \"Regular Employee\",\n  \"access_token\": \"<JWT_TOKEN>\"\n}\n\n ```\n\n**Possible Error Responses:**\n\n- **400 Bad Request:** Username/email or password is missing.\n    \n- **401 Unauthorized:** Invalid username/email or password.\n    \n- **403 Forbidden:** Account is Inactive or Suspended.\n    \n\n**Authentication Mechanism:**\n\nThe API retrieves the user's information from the SQLite database and verifies the entered password against the stored password hash using Werkzeug's `check_password_hash()` function.\n\nIf the credentials are valid and the account is Active, the system updates the last login date and generates a JWT access token.\n\nThe token is used to authenticate the user when accessing protected APIs.\n\n**Authorization:** All four user roles can log in, provided their accounts are Active.\n\n**Database Interaction:** Reads the user's account information from the `users` table and updates the `last_login_date` field after successful authentication."
+          },
+          "response": []
+        },
+        {
+          "name": "PUT Update User",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"full_name\": \"Updated Test User6\",\r\n  \"email\": \"updateduser6@example.com\",\r\n  \"department\": \"Cybersecurity\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/Hanaa-Ballout/users/6",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "Hanaa-Ballout",
+                "users",
+                "6"
+              ]
+            },
+            "description": "**API Name:** Update User\n\n**Purpose:** Allows authorized users to update user profile information, including full name, email, and department. Security Administrators can update any user's information, while Regular Employees can update only their own information.\n\n**HTTP Method:** PUT\n\n**Endpoint:** `/Hanaa-Ballout/users/{id}`\n\n**Required Parameters:**\n\n- `id`: The ID of the user whose information will be updated.\n    \n\n**Request Body (JSON):**\n\n```\n{\n  \"full_name\": \"Updated Test User\",\n  \"email\": \"updateduser@example.com\",\n  \"department\": \"Cybersecurity\"\n}\n\n ```\n\n**Successful Response -200 OK:**\n\n```\n{\n  \"message\": \"User updated successfully\",\n  \"user_id\": 6\n}\n\n ```\n\n**Possible Error Responses:**\n\n- **400 Bad Request:** Invalid JSON, empty fields, or invalid email format.\n    \n- **401 Unauthorized:** Missing or invalid JWT token.\n    \n- **403 Forbidden:** User lacks permission to update the specified account, or the authenticated account is not active.\n    \n- **404 Not Found:** The specified user does not exist.\n    \n- **409 Conflict:** The updated email already belongs to another user.\n    \n\n**Authentication and Authorization:**\n\nA valid JWT token must be provided using Bearer Token authentication.\n\n- Security Administrator: Can update any user's information.\n    \n- Regular Employee: Can update only their own information.\n    \n- Security Analyst: No permission.\n    \n- Auditor: No permission.\n    \n\nThe system checks the authenticated user's identity and role before allowing the update.\n\n**Database Interaction:** Updates the `full_name`, `email`, and `department` fields of the specified user in the SQLite `users` table."
+          },
+          "response": []
+        },
+        {
+          "name": "Delete user",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/Hanaa-Ballout/users/5",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "Hanaa-Ballout",
+                "users",
+                "5"
+              ]
+            },
+            "description": "**API Name:** Delete User\n\n**Purpose:** Allows an authorized Security Administrator to delete an existing user account from the system. Other user roles are not permitted to delete accounts.\n\n**HTTP Method:** DELETE\n\n**Endpoint:** `/Hanaa-Ballout/users/{id}`\n\n**Required Parameters:**\n\n- `id`: The ID of the user account to be deleted.\n    \n\n**Request Body:** None.\n\n**Successful Response -200 OK:**\n\n```\n{\n  \"message\": \"User deleted successfully\",\n  \"user_id\": 3\n}\n\n ```\n\n**Possible Error Responses:**\n\n- **401 Unauthorized:** Missing, invalid, or expired JWT token.\n    \n- **403 Forbidden:** The authenticated user is not a Security Administrator, or their account is not active.\n    \n- **404 Not Found:** The specified user does not exist.\n    \n\n**Authentication and Authorization:**\n\nA valid JWT token must be provided using Bearer Token authentication.\n\n- **Security Administrator:** Allowed to delete users.\n    \n- **Regular Employee:** Not allowed.\n    \n- **Security Analyst:** Not allowed.\n    \n- **Auditor:** Not allowed.\n    \n\nThe API retrieves the authenticated user's identity from the JWT token and checks their current role and account status in SQLite before performing the deletion.\n\n**Database Interaction:**\n\nThe API searches the SQLite `users` table for the specified user ID. If the user exists and the requester has sufficient permissions, the corresponding user record is deleted from the database.\n\n**Error Handling:**\n\nUnauthorized deletion attempts are rejected with `403 Forbidden`, while attempts to delete a nonexistent user return `404 Not Found`."
+          },
+          "response": []
+        },
+        {
+          "name": "GET users",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/Hanaa-Ballout/users",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "Hanaa-Ballout",
+                "users"
+              ]
+            },
+            "description": "**API Name:** Get All Users\n\n**Purpose:** Retrieves a list of all registered users stored in the system. Only Security Administrators and Auditors are authorized to view all user accounts.\n\n**HTTP Method:** GET\n\n**Endpoint:** `/Hanaa-Ballout/users`\n\n**Required Parameters:** None.\n\n**Request Body:** None.\n\n**Successful Response -200 OK:**\n\n```\n[\n  {\n    \"user_id\": 4,\n    \"full_name\": \"Test Administrator\",\n    \"username\": \"admin1\",\n    \"email\": \"admin1@example.com\",\n    \"department\": \"IT\",\n    \"role\": \"Security Administrator\",\n    \"account_status\": \"Active\",\n    \"created_date\": \"2026-10-13 19:00:00\",\n    \"last_login_date\": \"2026-10-14 17:00:00\"\n  }\n]\n\n ```\n\n**Possible Error Responses:**\n\n- **401 Unauthorized:** Missing, invalid, or expired JWT token.\n    \n- **403 Forbidden:** The authenticated user does not have permission to retrieve all users, or their account is not active.\n    \n\n**Authentication and Authorization:**\n\nA valid JWT token must be provided using Bearer Token authentication.\n\n- **Security Administrator:** Allowed.\n    \n- **Auditor:** Allowed.\n    \n- **Regular Employee:** Not allowed.\n    \n- **Security Analyst:** Not allowed.\n    \n\nThe system verifies the authenticated user's identity, role, and account status before retrieving the records.\n\n**Database Interaction:**\n\nThe API retrieves user records from the SQLite `users` table using a SELECT query.\n\n**Response Format:**\n\nReturns a JSON array in which each object represents one user. Each object contains the user's ID, full name, username, email, department, role, account status, creation date, and last login date.\n\nPasswords and password hashes are excluded from the response."
+          },
+          "response": []
+        },
+        {
+          "name": "Get user by username",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/Hanaa-Ballout/users/analyst1",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "Hanaa-Ballout",
+                "users",
+                "analyst1"
+              ]
+            },
+            "description": "**API Name:** GetUser by Username\n\n**Purpose:** Retrieves information about a specific registered user using their username. Security Administrators and Auditors can retrieve any user's information, while Regular Employees can retrieve only their own information.\n\n**HTTP Method:** GET\n\n**Endpoint:** `/Hanaa-Ballout/users/{username}`\n\n**Required Parameters:**\n\n- `username`: The username of the user whose information is being requested.\n    \n\n**Request Body:** None.\n\n**Successful Response -200 OK:**\n\n```\n{\n  \"user_id\": 6,\n  \"full_name\": \"Test User\",\n  \"username\": \"testuser6\",\n  \"email\": \"testuser6@example.com\",\n  \"department\": \"IT\",\n  \"role\": \"Regular Employee\",\n  \"account_status\": \"Active\",\n  \"created_date\": \"2026-10-13 19:00:00\",\n  \"last_login_date\": \"2026-10-14 17:00:00\"\n}\n\n ```\n\n**Possible Error Responses:**\n\n- **401 Unauthorized:** Missing, invalid, or expired JWT token.\n    \n- **403 Forbidden:** The authenticated user lacks permission to retrieve the requested information, or their account is not active.\n    \n- **404 Not Found:** The specified username does not exist.\n    \n\n**Authentication and Authorization:**\n\nA valid JWT token must be provided using Bearer Token authentication.\n\n- **Security Administrator:** Can retrieve any user's information.\n    \n- **Auditor:** Can retrieve any user's information.\n    \n- **Regular Employee:** Can retrieve only their own information.\n    \n- **Security Analyst:** No access.\n    \n\nThe system verifies the authenticated user's role and account status before returning the requested information.\n\n**Database Interaction:**\n\nThe API searches the SQLite `users` table using the provided username. If a matching user exists and the requester has sufficient permissions, the user's information is returned.\n\n**Response Format:**\n\nReturns a JSON object containing the user's ID, full name, username, email, department, role, account status, creation date, and last login date. Passwords and password hashes are excluded.\n\n**Error Handling:**\n\nIf the username does not exist, the API returns `404 Not Found` with the message `\"User not found\"`. Unauthorized access attempts return `403 Forbidden`."
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Service 2 - Assets",
+      "item": [
+        {
+          "name": "Post Assets",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "\r\n{\r\n  \"asset_name\": \"UPDATED Main Network Router\",\r\n  \"asset_type\": \"Network Device\",\r\n  \"ip_address\": \"192.168.1.1\",\r\n  \"operating_system\": \"Cisco IOS 2025\",\r\n  \"department\": \"IT\",\r\n  \"owner_id\": 1,\r\n  \"location\": \"Server Room 3\",\r\n  \"criticality_level\": \"Low\",\r\n  \"status\": \"Under Maintenance\"\r\n}\r\n\r\n",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://127.0.0.1:5001/Hanaa-Ballout/assets/",
+              "protocol": "http",
+              "host": [
+                "127",
+                "0",
+                "0",
+                "1"
+              ],
+              "port": "5001",
+              "path": [
+                "Hanaa-Ballout",
+                "assets",
+                ""
+              ]
+            },
+            "description": "**API Name:** Add New Asset\n\n**Method:** POST\n\n**Endpoint:** `/Hanaa-Ballout/assets`\n\n**Description:**  \nCreates a new organizational asset in the Asset Management Service. Only active Security Administrators are authorized to perform this operation. The API validates the required fields, asset type, IP address, criticality level, status, and asset owner before saving the asset in the SQLite database.\n\n**Required Request Body (JSON):**\n\n- `asset_name`: Name of the asset.\n    \n- `asset_type`: Server, Workstation, Database, Application, Network Device, or Cloud Resource.\n    \n- `ip_address`: Valid IP address.\n    \n- `department`: Department responsible for the asset.\n    \n- `owner_id`: ID of an existing user.\n    \n- `criticality_level`: Low, Medium, High, or Critical.\n    \n\n**Optional Fields:** `operating_system`, `location`, `status` (defaults to Active).\n\n**Successful Response:** `201 Created`\n\n- Returns a success message and the new asset ID.\n    \n\n**Possible Errors:**\n\n- `400 Bad Request`: Missing or invalid asset information.\n    \n- `401 Unauthorized`: Missing or invalid authentication token.\n    \n- `403 Forbidden`: User does not have the required permissions or an active account.\n    \n- `404 Not Found`: Asset owner does not exist.\n    \n\n**Authorization:** Bearer JWT token : security Administrator only."
+          },
+          "response": []
+        },
+        {
+          "name": "Put Assets",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "\r\n{\r\n  \"department\": \"Human Resources\",\r\n  \"criticality_level\": \"High\",\r\n  \"status\": \"Active\"\r\n}\r\n",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://127.0.0.1:5001/Hanaa-Ballout/assets/2",
+              "protocol": "http",
+              "host": [
+                "127",
+                "0",
+                "0",
+                "1"
+              ],
+              "port": "5001",
+              "path": [
+                "Hanaa-Ballout",
+                "assets",
+                "2"
+              ]
+            },
+            "description": "**API Name:** Update Asset Information\n\n**Method:** PUT\n\n**Endpoint:** `/Hanaa-Ballout/assets/{asset_id}`\n\n**Description:**  \nUpdates the information of an existing organizational asset. Only active Security Administrators can modify asset records. The API verifies the asset exists and validates the fields provided before applying the changes to the database.\n\n**Path Parameter:**\n\n- `asset_id`: Unique identifier of the asset.\n    \n\n**Request Body (JSON):**  \nAt least one of the following fields:\n\n- `asset_name`: Updated asset name.\n    \n- `owner_id`: Updated owner ID.\n    \n- `department`: Updated department.\n    \n- `criticality_level`: Low, Medium, High, or Critical.\n    \n- `status`: Active, Inactive, or Under Maintenance.\n    \n\n**Successful Response:** `200 OK`\n\n- Returns a success message and the updated asset record.\n    \n\n**Possible Errors:**\n\n- `400 Bad Request`: Invalid or empty request data.\n    \n- `401 Unauthorized`: Missing or invalid authentication token.\n    \n- `403 Forbidden`: Insufficient permissions or inactive account.\n    \n- `404 Not Found`: Asset or owner does not exist.\n    \n\n**Authorization:** Bearer JWT token: security administrator only."
+          },
+          "response": []
+        },
+        {
+          "name": "Delete asset",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "http://127.0.0.1:5001/Hanaa-Ballout/assets/4",
+              "protocol": "http",
+              "host": [
+                "127",
+                "0",
+                "0",
+                "1"
+              ],
+              "port": "5001",
+              "path": [
+                "Hanaa-Ballout",
+                "assets",
+                "4"
+              ]
+            },
+            "description": "**API Name:** Delete Asset\n\n**Method:** DELETE\n\n**Endpoint:** `/Hanaa-Ballout/assets/{asset_id}`\n\n**Description:**  \nPermanently deletes an existing organizational asset from the Asset Management Service. Only active Security Administrators are permitted to delete assets. The API verifies the user's identity and permissions and checks whether the asset exists before deleting it from the database.\n\n**Path Parameter:**\n\n- `asset_id`: Unique identifier of the asset to delete.\n    \n\n**Request Body:** None.\n\n**Successful Response:** `200 OK`\n\n- Returns a success message and the deleted asset ID.\n    \n\n**Possible Errors:**\n\n- `401 Unauthorized`: Missing or invalid authentication token.\n    \n- `403 Forbidden`: Insufficient permissions or inactive account.\n    \n- `404 Not Found`: Asset does not exist.\n    \n\n**Authorization:** Bearer JWT token : security administrator only."
+          },
+          "response": []
+        },
+        {
+          "name": "Get assets",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://127.0.0.1:5001/Hanaa-Ballout/assets",
+              "protocol": "http",
+              "host": [
+                "127",
+                "0",
+                "0",
+                "1"
+              ],
+              "port": "5001",
+              "path": [
+                "Hanaa-Ballout",
+                "assets"
+              ]
+            },
+            "description": "**API Name:** Retrieve All Assets\n\n**Method:** GET\n\n**Endpoint:** `/Hanaa-Ballout/assets`\n\n**Description:**  \nRetrieves all organizational assets stored in the Asset Management Service. The API returns each asset's identification, type, IP address, operating system, owner, department, location, criticality level, and current status.\n\n**Request Parameters:** None.\n\n**Request Body:** None.\n\n**Successful Response:** `200 OK`\n\n- `message`: Confirmation that assets were retrieved.\n    \n- `count`: Total number of returned assets.\n    \n- `assets`: Array containing the asset records.\n    \n\n**Possible Errors:**\n\n- `401 Unauthorized`: Missing or invalid authentication token.\n    \n- `403 Forbidden`: Insufficient permissions or inactive account.\n    \n\n**Authorization:** Bearer JWT token security administrator or auditor."
+          },
+          "response": []
+        },
+        {
+          "name": "Get asset by id",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://127.0.0.1:5001/Hanaa-Ballout/assets/10",
+              "protocol": "http",
+              "host": [
+                "127",
+                "0",
+                "0",
+                "1"
+              ],
+              "port": "5001",
+              "path": [
+                "Hanaa-Ballout",
+                "assets",
+                "10"
+              ]
+            },
+            "description": "StartFragment\n\n**API Name:** Retrieve Specific Asset\n\n**Method:** GET\n\n**Endpoint:** `/Hanaa-Ballout/assets/{asset_id}`\n\n**Description:**  \nRetrieves detailed information about a specific organizational asset using its unique asset ID. The API checks the user's permissions and searches the database for the requested record.\n\n**Path Parameter:**\n\n- `asset_id`: Unique identifier of the requested asset.\n    \n\n**Request Body:** None.\n\n**Successful Response:** `200 OK`\n\n- Returns a success message and an asset object containing all stored asset information.\n    \n\n**Possible Errors:**\n\n- `401 Unauthorized`: Missing or invalid authentication token.\n    \n- `403 Forbidden`: Insufficient permissions or inactive account.\n    \n- `404 Not Found`: No asset exists with the specified ID.\n    \n\n**Authorization:** Bearer JWT token : Security Administrator, Security Analyst, or Auditor."
+          },
+          "response": []
+        },
+        {
+          "name": "Search assets",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://127.0.0.1:5001/Hanaa-Ballout/assets/search?criticality_level=Critical",
+              "protocol": "http",
+              "host": [
+                "127",
+                "0",
+                "0",
+                "1"
+              ],
+              "port": "5001",
+              "path": [
+                "Hanaa-Ballout",
+                "assets",
+                "search"
+              ],
+              "query": [
+                {
+                  "key": "criticality_level",
+                  "value": "Critical"
+                }
+              ]
+            },
+            "description": "**API Name:** Search Assets\n\n**Method:** GET\n\n**Endpoint:** `/Hanaa-Ballout/assets/search`\n\n**Description:**  \nSearches organizational assets using one or multiple filtering criteria. The API supports partial matching for asset names and departments and exact matching for asset types, IP addresses, and criticality levels. Only authorized users can perform searches.\n\n**Optional Query Parameters:**\n\n- `asset_name`: Filter by asset name.\n    \n- `asset_type`: Filter by asset type.\n    \n- `ip_address`: Filter by IP address.\n    \n- `department`: Filter by department.\n    \n- `criticality_level`: Filter by Low, Medium, High, or Critical.\n    \n\nAt least one query parameter must be provided.\n\n**Example Request:**  \n`GET /Hanaa-Ballout/assets/search?department=IT&criticality_level=High`\n\n**Request Body:** None.\n\n**Successful Response:** `200 OK`\n\n- `message`: Confirmation that the search completed.\n    \n- `count`: Number of matching assets.\n    \n- `assets`: Array containing matching asset records.\n    \n\nAn empty array is returned when no matching assets are found.\n\n**Possible Errors:**\n\n- `400 Bad Request`: Missing, empty, or unsupported search parameters, or invalid criticality level.\n    \n- `401 Unauthorized`: Missing or invalid authentication token.\n    \n- `403 Forbidden`: Insufficient permissions or inactive account.\n    \n\n**Authorization:** Bearer JWT token : Security Administrator, Security Analyst, or Auditor."
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Service 7 -Vulnerability",
+      "item": [
+        {
+          "name": "post vulnerabilities",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"title\": \"Outdated OpenSSH Version\",\r\n  \"description\": \"An outdated OpenSSH version may expose the server to security vulnerabilities.\",\r\n  \"cve_id\": \"CVE-2023-48795\",\r\n  \"cvss_score\": 5.9,\r\n  \"severity_level\": \"Medium\",\r\n  \"asset_id\": 1,\r\n  \"discovery_source\": \"Automated Vulnerability Scan\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://127.0.0.1:5002/Hanaa-Ballout/vulnerabilities",
+              "protocol": "http",
+              "host": [
+                "127",
+                "0",
+                "0",
+                "1"
+              ],
+              "port": "5002",
+              "path": [
+                "Hanaa-Ballout",
+                "vulnerabilities"
+              ]
+            },
+            "description": "**API Name:** Create New Vulnerability\n\n**Method:** POST\n\n**Endpoint:** /Hanaa-Ballout/vulnerabilities\n\n**Purpose:** Creates a new security vulnerability record and associates it with an existing organizational asset.\n\n**Authorization:** Security Administrator only. Requires a valid JWT Bearer Token.\n\n**Request Body (JSON):**\n\n- title: Vulnerability title (required).\n    \n- description: Vulnerability description (required).\n    \n- cve_id: CVE identifier (required).\n    \n- cvss_score: Numeric score between 0 and 10 (required).\n    \n- severity_level: Low, Medium, High, or Critical (required).\n    \n- asset_id: ID of an existing asset (required).\n    \n- discovery_source: Source that discovered the vulnerability (required).\n    \n\n**Successful Response:** 201 Created. Returns a success message and the newly created vulnerability record, including its ID, status, and creation date.\n\n**Possible Errors:**\n\n- 400 Bad Request: Missing fields or invalid input.\n    \n- 401 Unauthorized: Missing or invalid JWT.\n    \n- 403 Forbidden: User lacks permission or account is inactive.\n    \n- 404 Not Found: Affected asset does not exist.\n    \n- 502 Bad Gateway: Unable to verify the affected asset.\n    \n- 503 Service Unavailable: Asset Management Service is unavailable."
+          },
+          "response": []
+        },
+        {
+          "name": "Get all vulnerabilities",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://127.0.0.1:5002/Hanaa-Ballout/vulnerabilities",
+              "protocol": "http",
+              "host": [
+                "127",
+                "0",
+                "0",
+                "1"
+              ],
+              "port": "5002",
+              "path": [
+                "Hanaa-Ballout",
+                "vulnerabilities"
+              ]
+            },
+            "description": "**API Name:** Retrieve All Vulnerabilities\n\n**Method:** GET\n\n**Endpoint:** /Hanaa-Ballout/vulnerabilities\n\n**Purpose:** Retrieves all vulnerability records stored in the system, including their severity levels, affected assets, and remediation statuses.\n\n**Authorization:** Security Administrator, Security Analyst, and Auditor. Requires a valid JWT Bearer Token.\n\n**Request Parameters:** None.\n\n**Request Body:** Not required.\n\n**Successful Response:** 200 OK. Returns a JSON object containing:\n\n- count: Total number of vulnerabilities.\n    \n- vulnerabilities: Array of vulnerability records containing all stored fields.\n    \n\n**Possible Errors:**\n\n- 401 Unauthorized: Missing or invalid JWT.\n    \n- 403 Forbidden: User lacks permission or account is inactive."
+          },
+          "response": []
+        },
+        {
+          "name": "Get vulnerabilities by id",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://127.0.0.1:5002/Hanaa-Ballout/vulnerabilities/1",
+              "protocol": "http",
+              "host": [
+                "127",
+                "0",
+                "0",
+                "1"
+              ],
+              "port": "5002",
+              "path": [
+                "Hanaa-Ballout",
+                "vulnerabilities",
+                "1"
+              ]
+            },
+            "description": "**API Name:** Retrieve Specific Vulnerability\n\n**Method:** GET\n\n**Endpoint:** /Hanaa-Ballout/vulnerabilities/{vulnerability_id}\n\n**Purpose:** Retrieves the complete information of a specific vulnerability using its unique identifier.\n\n**Authorization:** Security Administrator, Security Analyst, and Auditor. Requires a valid JWT Bearer Token.\n\n**Path Parameter:**\n\n- vulnerability_id: Unique ID of the vulnerability (required, integer).\n    \n\n**Request Body:** Not required.\n\n**Successful Response:** 200 OK. Returns the requested vulnerability record, including its title, description, CVE identifier, CVSS score, severity, affected asset, discovery source, status, and dates.\n\n**Possible Errors:**\n\n- 401 Unauthorized: Missing or invalid JWT.\n    \n- 403 Forbidden: User lacks permission or account is inactive.\n    \n- 404 Not Found: Vulnerability ID does not exist."
+          },
+          "response": []
+        },
+        {
+          "name": "Put vulnerabilities by id",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"status\": \"Closed\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://127.0.0.1:5002/Hanaa-Ballout/vulnerabilities/1",
+              "protocol": "http",
+              "host": [
+                "127",
+                "0",
+                "0",
+                "1"
+              ],
+              "port": "5002",
+              "path": [
+                "Hanaa-Ballout",
+                "vulnerabilities",
+                "1"
+              ]
+            },
+            "description": "**API Name:** Update Vulnerability Information\n\n**Method:** PUT\n\n**Endpoint:** /Hanaa-Ballout/vulnerabilities/{vulnerability_id}\n\n**Purpose:** Updates the information and remediation progress of an existing vulnerability while enforcing valid status transitions.\n\n**Authorization:** Security Administrator and Security Analyst. Requires a valid JWT Bearer Token.\n\n**Path Parameter:**\n\n- vulnerability_id: Unique ID of the vulnerability (required, integer).\n    \n\n**Request Body (JSON):**\n\n- description: Updated vulnerability description (optional).\n    \n- severity_level: Low, Medium, High, or Critical (optional).\n    \n- cvss_score: Numeric score between 0 and 10 (optional).\n    \n- status: Updated vulnerability status (optional).\n    \n\n**Status Transition Rules:**\n\nOpen → Under Investigation → In Progress → Resolved → Closed\n\nThe system rejects invalid transitions and automatically records the resolution date when the vulnerability reaches Resolved.\n\n**Successful Response:** 200 OK. Returns a success message and the updated vulnerability record.\n\n**Possible Errors:**\n\n- 400 Bad Request: Invalid fields, invalid values, empty request, or invalid status transition.\n    \n- 401 Unauthorized: Missing or invalid JWT.\n    \n- 403 Forbidden: User lacks permission or account is inactive.\n    \n- 404 Not Found: Vulnerability does not exist."
+          },
+          "response": []
+        },
+        {
+          "name": "Search vulnerabilities",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://127.0.0.1:5002/Hanaa-Ballout/vulnerabilities/search?status=Open",
+              "protocol": "http",
+              "host": [
+                "127",
+                "0",
+                "0",
+                "1"
+              ],
+              "port": "5002",
+              "path": [
+                "Hanaa-Ballout",
+                "vulnerabilities",
+                "search"
+              ],
+              "query": [
+                {
+                  "key": "status",
+                  "value": "Open"
+                }
+              ]
+            },
+            "description": "**API Name:** Search Vulnerabilities\n\n**Method:** GET\n\n**Endpoint:** /Hanaa-Ballout/vulnerabilities/search\n\n**Purpose:** Searches vulnerability records according to specified criteria. Supports multiple filters simultaneously.\n\n**Authorization:** Security Administrator, Security Analyst, and Auditor. Requires a valid JWT Bearer Token.\n\n**Query Parameters:**\n\n- cve_id: Filter by CVE identifier (optional).\n    \n- severity_level: Filter by severity level (optional).\n    \n- asset_id: Filter by affected asset ID (optional).\n    \n- status: Filter by vulnerability status (optional).\n    \n\nAt least one query parameter is required.\n\n**Example Request:**\n\n/Hanaa-Ballout/vulnerabilities/search?severity_level=Critical\n\n**Request Body:** Not required.\n\n**Successful Response:** 200 OK. Returns a JSON object containing:\n\n- count: Number of matching vulnerabilities.\n    \n- vulnerabilities: Array of matching vulnerability records.\n    \n\n**Possible Errors:**\n\n- 400 Bad Request: Missing search parameters or invalid filter values.\n    \n- 401 Unauthorized: Missing or invalid JWT.\n    \n- 403 Forbidden: User lacks permission or account is inactive."
+          },
+          "response": []
+        },
+        {
+          "name": "Delete vulnerability",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "http://127.0.0.1:5002/Hanaa-Ballout/vulnerabilities/3",
+              "protocol": "http",
+              "host": [
+                "127",
+                "0",
+                "0",
+                "1"
+              ],
+              "port": "5002",
+              "path": [
+                "Hanaa-Ballout",
+                "vulnerabilities",
+                "3"
+              ]
+            },
+            "description": "**API Name:** Delete Vulnerability\n\n**Method:** DELETE\n\n**Endpoint:** /Hanaa-Ballout/vulnerabilities/{vulnerability_id}\n\n**Purpose:** Permanently removes an existing vulnerability record from the database. Deletion is restricted to authorized administrators.\n\n**Authorization:** Security Administrator only. Requires a valid JWT Bearer Token.\n\n**Path Parameter:**\n\n- vulnerability_id: Unique ID of the vulnerability to delete (required, integer).\n    \n\n**Request Body:** Not required.\n\n**Successful Response:** 200 OK. Returns a success message and the ID of the deleted vulnerability.\n\n**Possible Errors:**\n\n- 401 Unauthorized: Missing or invalid JWT.\n    \n- 403 Forbidden: User lacks permission or account is inactive.\n    \n- 404 Not Found: Vulnerability does not exist."
+          },
+          "response": []
+        }
+      ]
+    }
+  ],
+  "variable": [
+    {
+      "key": "json_web_token_0inl",
+      "secret": true
+    },
+    {
+      "key": "json_web_token_1c09",
+      "secret": true
+    },
+    {
+      "key": "json_web_token_0az8",
+      "secret": true
+    },
+    {
+      "key": "json_web_token_042m",
+      "secret": true
+    },
+    {
+      "key": "json_web_token_067h",
+      "secret": true
+    }
+  ]
+}

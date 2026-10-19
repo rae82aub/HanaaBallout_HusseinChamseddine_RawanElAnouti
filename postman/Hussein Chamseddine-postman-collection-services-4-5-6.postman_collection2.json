@@ -1,0 +1,1350 @@
+{
+  "info": {
+    "_postman_id": "99f532b7-e2b9-4875-8ef0-bbe65d1429ab",
+    "name": "Hussein Chamseddine-postman-collection-services-4-5-6",
+    "description": "Sprint 1 Services 4, 5, and 6 implemented by Hussein Chamseddine. Set access_token from Service 1 login.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "42237438"
+  },
+  "item": [
+    {
+      "name": "Service 4 - Threat Intelligence",
+      "item": [
+        {
+          "name": "Add IP threat",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{access_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"threat_type\": \"IP Address\",\n  \"threat_value\": \"192.168.10.25\",\n  \"description\": \"Suspicious scanner IP\",\n  \"severity\": \"High\",\n  \"source\": \"Firewall\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://127.0.0.1:5004/Hussein-Chamseddine/threats",
+              "protocol": "http",
+              "host": [
+                "127",
+                "0",
+                "0",
+                "1"
+              ],
+              "port": "5004",
+              "path": [
+                "Hussein-Chamseddine",
+                "threats"
+              ]
+            },
+            "description": "**API Name:** Add Threat Indicator\n\n**Method:** POST\n\n**Endpoint:** `/Hussein-Chamseddine/threats`\n\n**Purpose:** Adds a cybersecurity threat indicator after validating type, value, severity, and uniqueness.\n\n**Authorization:** Security Administrator. JWT Bearer token required.\n\n**Successful Response:** 201 Created\n\n**Possible Errors:** 400 invalid fields, 401 missing token, 403 permission denied, 409 duplicate type and value."
+          },
+          "response": []
+        },
+        {
+          "name": "Add domain threat",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{access_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"threat_type\": \"Domain\",\n  \"threat_value\": \"malicious-example.com\",\n  \"description\": \"Phishing domain\",\n  \"severity\": \"Critical\",\n  \"source\": \"Threat Feed\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://127.0.0.1:5004/Hussein-Chamseddine/threats",
+              "protocol": "http",
+              "host": [
+                "127",
+                "0",
+                "0",
+                "1"
+              ],
+              "port": "5004",
+              "path": [
+                "Hussein-Chamseddine",
+                "threats"
+              ]
+            },
+            "description": "Add a Domain threat indicator. Domain format is validated."
+          },
+          "response": []
+        },
+        {
+          "name": "Add file hash threat",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{access_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"threat_type\": \"File Hash\",\n  \"threat_value\": \"44d88612fea8a8f36de82e1278abb02f\",\n  \"description\": \"Known malware hash\",\n  \"severity\": \"Medium\",\n  \"source\": \"Sandbox\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://127.0.0.1:5004/Hussein-Chamseddine/threats",
+              "protocol": "http",
+              "host": [
+                "127",
+                "0",
+                "0",
+                "1"
+              ],
+              "port": "5004",
+              "path": [
+                "Hussein-Chamseddine",
+                "threats"
+              ]
+            },
+            "description": "Add a File Hash threat. MD5, SHA-1, or SHA-256 hex values are accepted."
+          },
+          "response": []
+        },
+        {
+          "name": "Add duplicate threat (expect 409)",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{access_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"threat_type\": \"IP Address\",\n  \"threat_value\": \"192.168.10.25\",\n  \"description\": \"Duplicate\",\n  \"severity\": \"Low\",\n  \"source\": \"Firewall\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://127.0.0.1:5004/Hussein-Chamseddine/threats",
+              "protocol": "http",
+              "host": [
+                "127",
+                "0",
+                "0",
+                "1"
+              ],
+              "port": "5004",
+              "path": [
+                "Hussein-Chamseddine",
+                "threats"
+              ]
+            },
+            "description": "Repeats the same IP type and value to show duplicate rejection."
+          },
+          "response": []
+        },
+        {
+          "name": "Add invalid IP (expect 400)",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{access_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"threat_type\": \"IP Address\",\n  \"threat_value\": \"999.1.1.1\",\n  \"description\": \"Bad IP\",\n  \"severity\": \"High\",\n  \"source\": \"Firewall\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://127.0.0.1:5004/Hussein-Chamseddine/threats",
+              "protocol": "http",
+              "host": [
+                "127",
+                "0",
+                "0",
+                "1"
+              ],
+              "port": "5004",
+              "path": [
+                "Hussein-Chamseddine",
+                "threats"
+              ]
+            },
+            "description": "Shows IP format validation."
+          },
+          "response": []
+        },
+        {
+          "name": "Retrieve all threats",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{access_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://127.0.0.1:5004/Hussein-Chamseddine/threats",
+              "protocol": "http",
+              "host": [
+                "127",
+                "0",
+                "0",
+                "1"
+              ],
+              "port": "5004",
+              "path": [
+                "Hussein-Chamseddine",
+                "threats"
+              ]
+            },
+            "description": "**API Name:** Retrieve All Threat Indicators\n\n**Method:** GET\n\n**Endpoint:** `/Hussein-Chamseddine/threats`\n\n**Authorization:** Security Administrator, Security Analyst, Auditor."
+          },
+          "response": []
+        },
+        {
+          "name": "Retrieve threat by ID",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{access_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://127.0.0.1:5004/Hussein-Chamseddine/threats/1",
+              "protocol": "http",
+              "host": [
+                "127",
+                "0",
+                "0",
+                "1"
+              ],
+              "port": "5004",
+              "path": [
+                "Hussein-Chamseddine",
+                "threats",
+                "1"
+              ]
+            },
+            "description": "**API Name:** Retrieve Specific Threat Indicator\n\n**Path Parameter:** threat_id\n\n**Possible Errors:** 404 when the ID does not exist."
+          },
+          "response": []
+        },
+        {
+          "name": "Retrieve missing threat (expect 404)",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{access_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://127.0.0.1:5004/Hussein-Chamseddine/threats/9999",
+              "protocol": "http",
+              "host": [
+                "127",
+                "0",
+                "0",
+                "1"
+              ],
+              "port": "5004",
+              "path": [
+                "Hussein-Chamseddine",
+                "threats",
+                "9999"
+              ]
+            },
+            "description": "Shows the response for a non-existing threat ID."
+          },
+          "response": []
+        },
+        {
+          "name": "Search threats by severity",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{access_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://127.0.0.1:5004/Hussein-Chamseddine/threats/search?severity=High",
+              "protocol": "http",
+              "host": [
+                "127",
+                "0",
+                "0",
+                "1"
+              ],
+              "port": "5004",
+              "path": [
+                "Hussein-Chamseddine",
+                "threats",
+                "search"
+              ],
+              "query": [
+                {
+                  "key": "severity",
+                  "value": "High"
+                }
+              ]
+            },
+            "description": "**API Name:** Search Threat Indicators\n\n**Query parameters:** threat_type, threat_value, severity, source.\n\n**Authorization:** Security Administrator and Security Analyst. Auditors cannot search."
+          },
+          "response": []
+        },
+        {
+          "name": "Search threats by type",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{access_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://127.0.0.1:5004/Hussein-Chamseddine/threats/search?threat_type=Domain",
+              "protocol": "http",
+              "host": [
+                "127",
+                "0",
+                "0",
+                "1"
+              ],
+              "port": "5004",
+              "path": [
+                "Hussein-Chamseddine",
+                "threats",
+                "search"
+              ],
+              "query": [
+                {
+                  "key": "threat_type",
+                  "value": "Domain"
+                }
+              ]
+            },
+            "description": "Search by threat type."
+          },
+          "response": []
+        },
+        {
+          "name": "Update threat",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{access_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"description\": \"Updated scanner IP after review\",\n  \"severity\": \"Critical\",\n  \"source\": \"SOC\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://127.0.0.1:5004/Hussein-Chamseddine/threats/1",
+              "protocol": "http",
+              "host": [
+                "127",
+                "0",
+                "0",
+                "1"
+              ],
+              "port": "5004",
+              "path": [
+                "Hussein-Chamseddine",
+                "threats",
+                "1"
+              ]
+            },
+            "description": "**API Name:** Update Threat Information\n\n**Allowed fields:** description, severity, source.\n\n**Authorization:** Security Administrator only."
+          },
+          "response": []
+        },
+        {
+          "name": "Delete threat",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{access_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "http://127.0.0.1:5004/Hussein-Chamseddine/threats/3",
+              "protocol": "http",
+              "host": [
+                "127",
+                "0",
+                "0",
+                "1"
+              ],
+              "port": "5004",
+              "path": [
+                "Hussein-Chamseddine",
+                "threats",
+                "3"
+              ]
+            },
+            "description": "**API Name:** Delete Threat Indicator\n\n**Authorization:** Security Administrator only. Analysts and other roles receive 403."
+          },
+          "response": []
+        },
+        {
+          "name": "Unauthorized delete with analyst token",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{access_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "http://127.0.0.1:5004/Hussein-Chamseddine/threats/1",
+              "protocol": "http",
+              "host": [
+                "127",
+                "0",
+                "0",
+                "1"
+              ],
+              "port": "5004",
+              "path": [
+                "Hussein-Chamseddine",
+                "threats",
+                "1"
+              ]
+            },
+            "description": "Use a Security Analyst token in access_token to demonstrate unauthorized deletion prevention."
+          },
+          "response": []
+        }
+      ],
+      "event": [
+        {
+          "listen": "prerequest",
+          "script": {
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {},
+            "exec": [
+              ""
+            ]
+          }
+        },
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {},
+            "exec": [
+              ""
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Service 5 - Security Audit Logging",
+      "item": [
+        {
+          "name": "Create successful login log",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{access_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"user_id\": 1,\n  \"action\": \"Successful login\",\n  \"description\": \"User logged in successfully\",\n  \"severity\": \"Information\",\n  \"related_service\": \"Users and Identity Management\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://127.0.0.1:5005/Hussein-Chamseddine/logs",
+              "protocol": "http",
+              "host": [
+                "127",
+                "0",
+                "0",
+                "1"
+              ],
+              "port": "5005",
+              "path": [
+                "Hussein-Chamseddine",
+                "logs"
+              ]
+            },
+            "description": "**API Name:** Create Log Record\n\n**Method:** POST\n\n**Endpoint:** `/Hussein-Chamseddine/logs`\n\n**Required:** user_id, action, description, severity, related_service\n\n**Severity:** Information, Warning, Error, Critical\n\nLogs cannot be edited after creation."
+          },
+          "response": []
+        },
+        {
+          "name": "Create failed login log",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{access_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"user_id\": 1,\n  \"action\": \"Failed login\",\n  \"description\": \"Invalid password submitted\",\n  \"severity\": \"Warning\",\n  \"related_service\": \"Users and Identity Management\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://127.0.0.1:5005/Hussein-Chamseddine/logs",
+              "protocol": "http",
+              "host": [
+                "127",
+                "0",
+                "0",
+                "1"
+              ],
+              "port": "5005",
+              "path": [
+                "Hussein-Chamseddine",
+                "logs"
+              ]
+            },
+            "description": "Record a failed authentication attempt."
+          },
+          "response": []
+        },
+        {
+          "name": "Create user creation log",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{access_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"user_id\": 1,\n  \"action\": \"User creation\",\n  \"description\": \"Created a Regular Employee account\",\n  \"severity\": \"Information\",\n  \"related_service\": \"Users and Identity Management\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://127.0.0.1:5005/Hussein-Chamseddine/logs",
+              "protocol": "http",
+              "host": [
+                "127",
+                "0",
+                "0",
+                "1"
+              ],
+              "port": "5005",
+              "path": [
+                "Hussein-Chamseddine",
+                "logs"
+              ]
+            },
+            "description": "Record user creation."
+          },
+          "response": []
+        },
+        {
+          "name": "Create unauthorized access log",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{access_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"user_id\": 2,\n  \"action\": \"Unauthorized access\",\n  \"description\": \"Analyst attempted to delete a threat\",\n  \"severity\": \"Warning\",\n  \"related_service\": \"Threat Intelligence\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://127.0.0.1:5005/Hussein-Chamseddine/logs",
+              "protocol": "http",
+              "host": [
+                "127",
+                "0",
+                "0",
+                "1"
+              ],
+              "port": "5005",
+              "path": [
+                "Hussein-Chamseddine",
+                "logs"
+              ]
+            },
+            "description": "Record an unauthorized access attempt."
+          },
+          "response": []
+        },
+        {
+          "name": "Retrieve all logs",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{access_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://127.0.0.1:5005/Hussein-Chamseddine/logs",
+              "protocol": "http",
+              "host": [
+                "127",
+                "0",
+                "0",
+                "1"
+              ],
+              "port": "5005",
+              "path": [
+                "Hussein-Chamseddine",
+                "logs"
+              ]
+            },
+            "description": "**API Name:** Retrieve All Logs\n\n**Authorization:** Security Administrator and Auditor."
+          },
+          "response": []
+        },
+        {
+          "name": "Retrieve log by ID",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{access_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://127.0.0.1:5005/Hussein-Chamseddine/logs/1",
+              "protocol": "http",
+              "host": [
+                "127",
+                "0",
+                "0",
+                "1"
+              ],
+              "port": "5005",
+              "path": [
+                "Hussein-Chamseddine",
+                "logs",
+                "1"
+              ]
+            },
+            "description": "**API Name:** Retrieve Specific Log\n\n**Authorization:** Security Administrator, Auditor, Security Analyst."
+          },
+          "response": []
+        },
+        {
+          "name": "Retrieve missing log (expect 404)",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{access_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://127.0.0.1:5005/Hussein-Chamseddine/logs/9999",
+              "protocol": "http",
+              "host": [
+                "127",
+                "0",
+                "0",
+                "1"
+              ],
+              "port": "5005",
+              "path": [
+                "Hussein-Chamseddine",
+                "logs",
+                "9999"
+              ]
+            },
+            "description": "Shows the response for an invalid log ID."
+          },
+          "response": []
+        },
+        {
+          "name": "Search logs by action",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{access_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://127.0.0.1:5005/Hussein-Chamseddine/logs/search?action=login",
+              "protocol": "http",
+              "host": [
+                "127",
+                "0",
+                "0",
+                "1"
+              ],
+              "port": "5005",
+              "path": [
+                "Hussein-Chamseddine",
+                "logs",
+                "search"
+              ],
+              "query": [
+                {
+                  "key": "action",
+                  "value": "login"
+                }
+              ]
+            },
+            "description": "**API Name:** Search Logs\n\n**Query parameters:** user, date, action, severity, related_service."
+          },
+          "response": []
+        },
+        {
+          "name": "Search logs by severity",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{access_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://127.0.0.1:5005/Hussein-Chamseddine/logs/search?severity=Warning",
+              "protocol": "http",
+              "host": [
+                "127",
+                "0",
+                "0",
+                "1"
+              ],
+              "port": "5005",
+              "path": [
+                "Hussein-Chamseddine",
+                "logs",
+                "search"
+              ],
+              "query": [
+                {
+                  "key": "severity",
+                  "value": "Warning"
+                }
+              ]
+            },
+            "description": "Filter logs by severity."
+          },
+          "response": []
+        },
+        {
+          "name": "Get logs by user",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{access_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://127.0.0.1:5005/Hussein-Chamseddine/logs/user/1",
+              "protocol": "http",
+              "host": [
+                "127",
+                "0",
+                "0",
+                "1"
+              ],
+              "port": "5005",
+              "path": [
+                "Hussein-Chamseddine",
+                "logs",
+                "user",
+                "1"
+              ]
+            },
+            "description": "**API Name:** Retrieve Logs By User\n\nReturns all activities for the selected user."
+          },
+          "response": []
+        },
+        {
+          "name": "Get logs for user with no records",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{access_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://127.0.0.1:5005/Hussein-Chamseddine/logs/user/4",
+              "protocol": "http",
+              "host": [
+                "127",
+                "0",
+                "0",
+                "1"
+              ],
+              "port": "5005",
+              "path": [
+                "Hussein-Chamseddine",
+                "logs",
+                "user",
+                "4"
+              ]
+            },
+            "description": "Use a valid user ID that has no logs. The response count is 0."
+          },
+          "response": []
+        },
+        {
+          "name": "Delete log",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{access_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "http://127.0.0.1:5005/Hussein-Chamseddine/logs/4",
+              "protocol": "http",
+              "host": [
+                "127",
+                "0",
+                "0",
+                "1"
+              ],
+              "port": "5005",
+              "path": [
+                "Hussein-Chamseddine",
+                "logs",
+                "4"
+              ]
+            },
+            "description": "**API Name:** Delete Logs\n\n**Authorization:** Security Administrator only. Analysts receive 403."
+          },
+          "response": []
+        },
+        {
+          "name": "Unauthorized delete with analyst token",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{access_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "http://127.0.0.1:5005/Hussein-Chamseddine/logs/1",
+              "protocol": "http",
+              "host": [
+                "127",
+                "0",
+                "0",
+                "1"
+              ],
+              "port": "5005",
+              "path": [
+                "Hussein-Chamseddine",
+                "logs",
+                "1"
+              ]
+            },
+            "description": "Use a Security Analyst token to demonstrate unauthorized deletion prevention."
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Service 6 - Security Reports",
+      "item": [
+        {
+          "name": "Security summary",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{access_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://127.0.0.1:5006/Hussein-Chamseddine/reports/summary",
+              "protocol": "http",
+              "host": [
+                "127",
+                "0",
+                "0",
+                "1"
+              ],
+              "port": "5006",
+              "path": [
+                "Hussein-Chamseddine",
+                "reports",
+                "summary"
+              ]
+            },
+            "description": "**API Name:** Generate Security Summary Report\n\nReturns users, assets, open incidents, and critical threats.\n\n**Authorization:** Security Administrator and Auditor only."
+          },
+          "response": []
+        },
+        {
+          "name": "Incident report",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{access_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://127.0.0.1:5006/Hussein-Chamseddine/reports/incidents",
+              "protocol": "http",
+              "host": [
+                "127",
+                "0",
+                "0",
+                "1"
+              ],
+              "port": "5006",
+              "path": [
+                "Hussein-Chamseddine",
+                "reports",
+                "incidents"
+              ]
+            },
+            "description": "Returns total incidents plus grouping by severity and status."
+          },
+          "response": []
+        },
+        {
+          "name": "Asset report",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{access_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://127.0.0.1:5006/Hussein-Chamseddine/reports/assets",
+              "protocol": "http",
+              "host": [
+                "127",
+                "0",
+                "0",
+                "1"
+              ],
+              "port": "5006",
+              "path": [
+                "Hussein-Chamseddine",
+                "reports",
+                "assets"
+              ]
+            },
+            "description": "Returns total assets, critical assets, and grouping by type."
+          },
+          "response": []
+        },
+        {
+          "name": "Threat report",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{access_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://127.0.0.1:5006/Hussein-Chamseddine/reports/threats",
+              "protocol": "http",
+              "host": [
+                "127",
+                "0",
+                "0",
+                "1"
+              ],
+              "port": "5006",
+              "path": [
+                "Hussein-Chamseddine",
+                "reports",
+                "threats"
+              ]
+            },
+            "description": "Returns threat totals, grouping by severity and type, and recent threats. Compare values with the Service 4 database."
+          },
+          "response": []
+        },
+        {
+          "name": "Vulnerability report",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{access_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://127.0.0.1:5006/Hussein-Chamseddine/reports/vulnerabilities",
+              "protocol": "http",
+              "host": [
+                "127",
+                "0",
+                "0",
+                "1"
+              ],
+              "port": "5006",
+              "path": [
+                "Hussein-Chamseddine",
+                "reports",
+                "vulnerabilities"
+              ]
+            },
+            "description": "Returns vulnerability totals grouped by severity and status."
+          },
+          "response": []
+        },
+        {
+          "name": "Activity report",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{access_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://127.0.0.1:5006/Hussein-Chamseddine/reports/activity",
+              "protocol": "http",
+              "host": [
+                "127",
+                "0",
+                "0",
+                "1"
+              ],
+              "port": "5006",
+              "path": [
+                "Hussein-Chamseddine",
+                "reports",
+                "activity"
+              ]
+            },
+            "description": "Returns login attempts, failed logins, and most performed actions from audit logs."
+          },
+          "response": []
+        },
+        {
+          "name": "Unauthorized report with analyst token",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{access_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://127.0.0.1:5006/Hussein-Chamseddine/reports/summary",
+              "protocol": "http",
+              "host": [
+                "127",
+                "0",
+                "0",
+                "1"
+              ],
+              "port": "5006",
+              "path": [
+                "Hussein-Chamseddine",
+                "reports",
+                "summary"
+              ]
+            },
+            "description": "Use a Security Analyst token. Report generation is forbidden."
+          },
+          "response": []
+        }
+      ]
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "",
+        "type": "string"
+      }
+    ]
+  },
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "packages": {},
+        "requests": {},
+        "exec": [
+          ""
+        ]
+      }
+    },
+    {
+      "listen": "test",
+      "script": {
+        "type": "text/javascript",
+        "packages": {},
+        "requests": {},
+        "exec": [
+          ""
+        ]
+      }
+    }
+  ],
+  "variable": [
+    {
+      "key": "access_token",
+      "value": ""
+    }
+  ]
+}

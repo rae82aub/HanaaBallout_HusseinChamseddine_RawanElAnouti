@@ -1,0 +1,285 @@
+{
+  "info": {
+    "_postman_id": "cc1738b7-3f8c-4920-8aaa-c2cb6bb8c65f",
+    "name": "service 3",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "58786322",
+    "_collection_link": "https://go.postman.co/collection/58786322-cc1738b7-3f8c-4920-8aaa-c2cb6bb8c65f?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "create incident",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{json_web_token_10vd}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"title\": \"Phishing Email Detected\",\n  \"description\": \"An employee received a suspicious email requesting login credentials.\",\n  \"category\": \"Phishing attack\",\n  \"severity\": \"Medium\",\n  \"affected_asset\": 1\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://127.0.0.1:5003/Rawan-El-Anouti/incidents",
+          "protocol": "http",
+          "host": [
+            "127",
+            "0",
+            "0",
+            "1"
+          ],
+          "port": "5003",
+          "path": [
+            "Rawan-El-Anouti",
+            "incidents"
+          ]
+        },
+        "description": "Method: POST Endpoint: `/Rawan-El-Anouti/incidents`\n\nPurpose: Allows authorized users to report cybersecurity incidents and store their details in the database.\n\nRequired Parameters: `title`, `description`, `category`, `severity`, `affected_asset`.\n\nRequest Example:\n\n{  \n\"title\": \"Phishing Email Detected\",  \n\"description\": \"An employee received a suspicious email.\",  \n\"category\": \"Phishing attack\",  \n\"severity\": \"Medium\",  \n\"affected_asset\": 1  \n}\n\nSuccessful Response (201 Created):\n\n{  \n\"status\": \"success\",  \n\"message\": \"Incident created successfully\"  \n}\n\nThe actual response also contains the created incident's details.\n\nPossible Errors:\n\n- 400: Missing or invalid information.\n    \n- 401: Missing or invalid authentication token.\n    \n- 403: User does not have permission to create incidents.\n    \n\nAuthentication: JWT Bearer Token. Only Security Administrators and Regular Employees can create incidents."
+      },
+      "response": []
+    },
+    {
+      "name": "assign incident",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{json_web_token_0bl2}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "PUT",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"analyst_id\": 2\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://127.0.0.1:5003/Rawan-El-Anouti/incidents/5/assign",
+          "protocol": "http",
+          "host": [
+            "127",
+            "0",
+            "0",
+            "1"
+          ],
+          "port": "5003",
+          "path": [
+            "Rawan-El-Anouti",
+            "incidents",
+            "5",
+            "assign"
+          ]
+        },
+        "description": "**Method:** PUT  \n**Endpoint:** `/Rawan-El-Anouti/incidents/5/assign`\n\n**Purpose:** Allows a Security Administrator to assign a cybersecurity incident to a Security Analyst.\n\n**Required Parameters:** `incident_id` (5), `analyst_id` (2).\n\n**Request Example:**\n\n``` json\n{\n  \"analyst_id\": 2\n}\n\n ```\n\n**Successful Response (200 OK):**\n\n``` json\n{\n  \"message\": \"Incident assigned successfully\",\n  \"status\": \"success\"\n}\n\n ```\n\nThe response also includes the updated incident with `assigned_analyst_id: 2`.\n\n**Authentication:** JWT Bearer Token (Security Administrator).\n\n**Possible Errors:**\n\n- **400:** Missing or invalid analyst information.\n    \n- **401:** Missing or invalid authentication token.\n    \n- **403:** Insufficient permissions.\n    \n- **404:** Incident or analyst not found."
+      },
+      "response": []
+    },
+    {
+      "name": "update incident status",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{json_web_token_0bl2}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "PUT",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"status\": \"Under Investigation\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://127.0.0.1:5003/Rawan-El-Anouti/incidents/5/status",
+          "protocol": "http",
+          "host": [
+            "127",
+            "0",
+            "0",
+            "1"
+          ],
+          "port": "5003",
+          "path": [
+            "Rawan-El-Anouti",
+            "incidents",
+            "5",
+            "status"
+          ]
+        },
+        "description": "**Method:** PUT  \n**Endpoint:** `/Rawan-El-Anouti/incidents/5/status`\n\n**Purpose:** Allows authorized users to update an incident's status throughout its lifecycle.\n\n**Required Parameters:** `incident_id` (5), `status`.\n\n**Request Example:**\n\n``` json\n{\n  \"status\": \"Under Investigation\"\n}\n\n ```\n\n**Successful Response (200 OK):**\n\n``` json\n{\n  \"message\": \"Incident status updated successfully\",\n  \"status\": \"success\"\n}\n\n ```\n\nThe response also includes the incident's updated status.\n\n**Authentication:** JWT Bearer Token (authorized user).\n\n**Possible Errors:**\n\n- **400:** Invalid status or prohibited status transition.\n    \n- **401:** Missing or invalid authentication token.\n    \n- **403:** Insufficient permissions.\n    \n- **404:** Incident not found."
+      },
+      "response": []
+    },
+    {
+      "name": "add notes with admin access",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{json_web_token_0bl2}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"note_content\": \"The phishing email wa investigated. The suspicious sender and embedded links were analyzed, and the incident was resolved.\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://127.0.0.1:5003/Rawan-El-Anouti/incidents/5/notes",
+          "protocol": "http",
+          "host": [
+            "127",
+            "0",
+            "0",
+            "1"
+          ],
+          "port": "5003",
+          "path": [
+            "Rawan-El-Anouti",
+            "incidents",
+            "5",
+            "notes"
+          ]
+        },
+        "description": "**Method:** POST  \n**Endpoint:** `/Rawan-El-Anouti/incidents/5/notes`\n\n**Purpose:** Allows authorized users to add investigation notes to an incident, including evidence collected, analysis performed, and actions taken.\n\n**Required Parameters:** `incident_id` (5), `note_content`.\n\n**Request Example:**\n\n``` json\n{\n  \"note_content\": \"The phishing email was investigated. The suspicious sender and embedded links were analyzed, and the incident was resolved.\"\n}\n\n ```\n\n**Successful Response (201 Created):**\n\n``` json\n{\n  \"message\": \"Investigation note added successfully\",\n  \"status\": \"success\"\n}\n\n ```\n\nThe response also includes the updated incident and its investigation notes.\n\n**Authentication:** JWT Bearer Token (authorized user).\n\n**Possible Errors:**\n\n- **400:** Missing or invalid note content.\n    \n- **401:** Missing or invalid authentication token.\n    \n- **403:** Insufficient permissions.\n    \n- **404:** Incident not found."
+      },
+      "response": []
+    },
+    {
+      "name": "retreive one incident",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{json_web_token_0bl2}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "\"investigation_notes\": [\n  {\n    \"note_id\": 2,\n    \"incident_id\": 5,\n    \"analyst_id\": 1,\n    \"note_content\": \"The phishing email was investigated...\"\n  }\n]",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://127.0.0.1:5003/Rawan-El-Anouti/incidents/5",
+          "protocol": "http",
+          "host": [
+            "127",
+            "0",
+            "0",
+            "1"
+          ],
+          "port": "5003",
+          "path": [
+            "Rawan-El-Anouti",
+            "incidents",
+            "5"
+          ]
+        },
+        "description": "**Method:** GET  \n**Endpoint:** `/Rawan-El-Anouti/incidents/5`\n\n**Purpose:** Retrieves the details of a specific cybersecurity incident, including its assigned analyst, current status, and investigation notes.\n\n**Required Parameter:** `incident_id` (5).\n\n**Request Body:** None.\n\n**Successful Response (200 OK):**\n\n``` json\n{\n  \"status\": \"success\",\n  \"incident\": {\n    \"incident_id\": 5,\n    \"title\": \"Phishing Email Detected\",\n    \"severity\": \"Medium\",\n    \"status\": \"Closed\",\n    \"assigned_analyst_id\": 2,\n    \"investigation_notes\": [\n      {\n        \"note_id\": 2,\n        \"incident_id\": 5,\n        \"analyst_id\": 1\n      }\n    ]\n  }\n}\n\n ```\n\n_The actual response includes additional incident and investigation note details._\n\n**Authentication:** JWT Bearer Token (authorized user).\n\n**Possible Errors:**\n\n- **401:** Missing or invalid authentication token.\n    \n- **403:** Insufficient permissions.\n    \n- **404:** Incident not found."
+      },
+      "response": []
+    },
+    {
+      "name": "retreive incidents",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{json_web_token_13zv}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://127.0.0.1:5003/Rawan-El-Anouti/incidents",
+          "protocol": "http",
+          "host": [
+            "127",
+            "0",
+            "0",
+            "1"
+          ],
+          "port": "5003",
+          "path": [
+            "Rawan-El-Anouti",
+            "incidents"
+          ]
+        },
+        "description": "**Method:** GET  \n**Endpoint:** `/Rawan-El-Anouti/incidents`\n\n**Purpose:** Allows Security Administrators and Auditors to retrieve all cybersecurity incidents stored in the database, including their severity, status, and assigned analysts.\n\n**Required Parameters:** None.\n\n**Request Body:** None.\n\n**Successful Response (200 OK):**\n\n``` json\n{\n  \"status\": \"success\",\n  \"incidents\": [\n    {\n      \"incident_id\": 5,\n      \"title\": \"Phishing Email Detected\",\n      \"severity\": \"Medium\",\n      \"status\": \"Closed\",\n      \"assigned_analyst_id\": 2\n    }\n  ]\n}\n\n ```\n\n_The actual response includes additional incident details._\n\n**Authentication:** JWT Bearer Token (Security Administrator or Auditor).\n\n**Possible Errors:**\n\n- **401:** Missing or invalid authentication token.\n    \n- **403:** User does not have permission to retrieve all incidents."
+      },
+      "response": []
+    }
+  ],
+  "variable": [
+    {
+      "key": "json_web_token_10vd",
+      "secret": true
+    },
+    {
+      "key": "json_web_token_07a5",
+      "secret": true
+    },
+    {
+      "key": "json_web_token_0bl2",
+      "secret": true
+    },
+    {
+      "key": "json_web_token_13zv",
+      "secret": true
+    }
+  ]
+}
