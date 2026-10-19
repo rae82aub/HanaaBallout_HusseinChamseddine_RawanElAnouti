@@ -3,6 +3,13 @@ from flask_jwt_extended import JWTManager, jwt_required, get_jwt_identity
 from database import create_tables, get_connection, get_users_connection
 import os
 import requests
+import sys
+from pathlib import Path
+
+PROJECT_DIR = Path(__file__).resolve().parent.parent
+sys.path.insert(0, str(PROJECT_DIR))
+
+from common import write_audit_log
 
 app = Flask(__name__)
 
@@ -215,6 +222,13 @@ def create_incident():
         (incident_id,)
     ).fetchone()
     connection.close()
+    write_audit_log(
+    user_id=current_user["user_id"],
+    action="Incident creation",
+    description=f"Created incident {incident_id}: {title}",
+    severity="Information",
+    related_service="Incident Management"
+)
 
     return ok({
         "message": "Incident created successfully",
@@ -330,6 +344,14 @@ def assign_incident(incident_id):
     connection.close()
 
     notify_analyst_assignment(analyst_id, incident_id, updated["title"])
+    write_audit_log(
+    user_id=current_user["user_id"],
+    action="Incident assignment",
+    description=f"Assigned incident {incident_id} to analyst {analyst_id}",
+    severity="Information",
+    related_service="Incident Management"
+)
+
 
     return ok({
         "message": "Incident assigned successfully",
@@ -395,6 +417,13 @@ def update_incident_status(incident_id):
     ).fetchone()
     notes = get_notes_for_incident(connection, incident_id)
     connection.close()
+    write_audit_log(
+    user_id=current_user["user_id"],
+    action="Incident status update",
+    description=f"Updated incident {incident_id} from {current_status} to {new_status}",
+    severity="Information",
+    related_service="Incident Management"
+)
 
     return ok({
         "message": "Incident status updated successfully",
@@ -445,6 +474,13 @@ def add_investigation_note(incident_id):
         (incident_id,)
     ).fetchone()
     connection.close()
+    write_audit_log(
+    user_id=current_user["user_id"],
+    action="Investigation note added",
+    description=f"Added investigation note to incident {incident_id}",
+    severity="Information",
+    related_service="Incident Management"
+)
 
     return ok({
         "message": "Investigation note added successfully",

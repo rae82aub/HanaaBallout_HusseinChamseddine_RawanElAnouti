@@ -2,6 +2,14 @@ from flask import Flask, jsonify, request
 from flask_jwt_extended import JWTManager, jwt_required, get_jwt_identity
 from database import create_tables, get_connection, get_users_connection
 import os
+import sys
+from pathlib import Path
+
+PROJECT_DIR = Path(__file__).resolve().parent.parent
+sys.path.insert(0, str(PROJECT_DIR))
+
+from common import write_audit_log
+
 
 app = Flask(__name__)
 
@@ -144,6 +152,14 @@ def create_notification():
         (cursor.lastrowid,)
     ).fetchone()
     connection.close()
+
+    write_audit_log(
+        user_id=current_user["user_id"],
+        action="Notification creation",
+        description=f"Created notification {notification['notification_id']} for user {user_id}",
+        severity="Information",
+        related_service="Notification and Alert Management"
+    )
 
     return ok({
         "message": "Notification created successfully",
@@ -320,10 +336,20 @@ def mark_notification_read(notification_id):
     ).fetchone()
     connection.close()
 
+    write_audit_log(
+    user_id=current_user["user_id"],
+    action="Notification marked as read",
+    description=f"Marked notification {notification_id} as read",
+    severity="Information",
+    related_service="Notification and Alert Management"
+)
+
+
     return ok({
         "message": "Notification marked as read",
         "notification": notification_to_dict(updated)
     })
+
 
 
 @app.route(f"{PREFIX}/notifications/<int:notification_id>", methods=["DELETE"])
@@ -353,6 +379,14 @@ def delete_notification(notification_id):
     )
     connection.commit()
     connection.close()
+    write_audit_log(
+    user_id=current_user["user_id"],
+    action="Notification deletion",
+    description=f"Deleted notification {notification_id}",
+    severity="Warning",
+    related_service="Notification and Alert Management"
+)
+
 
     return ok({
         "message": "Notification deleted successfully",

@@ -3,6 +3,13 @@ from flask_jwt_extended import JWTManager, jwt_required, get_jwt_identity
 from database import create_tables, get_connection, get_users_connection
 import os
 import sqlite3
+import sys
+from pathlib import Path
+
+PROJECT_DIR = Path(__file__).resolve().parent.parent
+sys.path.insert(0, str(PROJECT_DIR))
+
+from common import write_audit_log
 
 app = Flask(__name__)
 
@@ -154,6 +161,13 @@ def create_playbook():
         (cursor.lastrowid,)
     ).fetchone()
     connection.close()
+    write_audit_log(
+    user_id=current_user["user_id"],
+    action="Playbook creation",
+    description=f"Created playbook {playbook['playbook_id']}: {name}",
+    severity="Information",
+    related_service="Security Playbook and Response Automation"
+)
 
     return ok({
         "message": "Playbook created successfully",
@@ -276,6 +290,15 @@ def add_response_action(playbook_id):
     actions = get_actions(connection, playbook_id)
     connection.close()
 
+    write_audit_log(
+        user_id=current_user["user_id"],
+        action="Response action creation",
+        description=f"Added response action step {step_number} to playbook {playbook_id}",
+        severity="Information",
+        related_service="Security Playbook and Response Automation"
+    )
+
+
     return ok({
         "message": "Response action added successfully",
         "playbook": playbook_to_dict(playbook, actions)
@@ -372,6 +395,18 @@ def update_action_status(action_id):
     ).fetchone()
     connection.close()
 
+    write_audit_log(
+        user_id=current_user["user_id"],
+        action="Response action status update",
+        description=(
+            f"Updated response action {action_id} "
+            f"from {action['status']} to {new_status}"
+        ),
+        severity="Information",
+        related_service="Security Playbook and Response Automation"
+    )
+
+
     return ok({
         "message": "Response action updated successfully",
         "action": dict(updated)
@@ -405,6 +440,15 @@ def delete_playbook(playbook_id):
     )
     connection.commit()
     connection.close()
+
+    write_audit_log(
+        user_id=current_user["user_id"],
+        action="Playbook deletion",
+        description=f"Deleted playbook {playbook_id}",
+        severity="Warning",
+        related_service="Security Playbook and Response Automation"
+    )
+
 
     return ok({
         "message": "Playbook deleted successfully",
