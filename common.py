@@ -22,7 +22,12 @@ load_dotenv(PROJECT_DIR / ".env")
 load_dotenv(HANAA_DIR / ".env")
 
 PREFIX = "/Hussein-Chamseddine"
-LOGS_DB = PROJECT_DIR / "service5_logs" / "database.db"
+LOGS_DB = Path(
+    os.environ.get(
+        "AUDIT_DB_PATH",
+        str(PROJECT_DIR / "service5_logs" / "database.db")
+    )
+)
 THREATS_DB = PROJECT_DIR / "service4_threats" / "database.db"
 
 DEFAULT_USERS_DB = HANAA_DIR / "service1_users" / "database.db"
